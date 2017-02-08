@@ -1,6 +1,8 @@
 # python-stdlib-note
-keep this under my pillow
 
+翻看 python 标准库时的笔记  
+
+追加 `[*]` 则阅读完毕  
 
 1. Introduction[*]
 2. Built-in Functions[*]  
