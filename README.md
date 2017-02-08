@@ -4,8 +4,8 @@
 
 追加 `[*]` 则阅读完毕  
 
-1. Introduction[*]
-2. Built-in Functions[*]  
+1. [Introduction[*]](https://docs.python.org/3.5/library/intro.html)
+2. [Built-in Functions[*]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/functions.md)  
 3. Built-in Constants  
     3.1. Constants added by the site module  
 4. Built-in Types  
