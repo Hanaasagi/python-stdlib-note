@@ -1,4 +1,5 @@
 # python-stdlib-note
+**枕头不够高，标准库来垫**  
 
 翻看 python 标准库时的笔记  
 
