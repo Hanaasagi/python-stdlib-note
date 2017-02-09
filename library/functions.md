@@ -6,74 +6,6 @@
 
  If x is not a Python int object, it has to define an __index__() method that returns an integer.
 
-###真值判断  
-Any object can be tested for truth value, for use in an **if** or **while** condition or as **operand of the Boolean operations** below. The following values are considered false:
-
-    None
-
-    False
-
-    zero of any numeric type, for example, 0, 0.0, 0j.
-
-    any empty sequence, for example, '', (), [].
-
-    any empty mapping, for example, {}.
-
-    instances of user-defined classes, if the class defines a __bool__() or __len__() method, when that method returns the integer zero or bool value False. [1]
-
-All other values are considered true — so objects of many types are always true.
-
-Operations and built-in functions that have a Boolean result always return 0 or False for false and 1 or True for true, unless otherwise stated. (Important exception: t**he Boolean operations or and and always return one of their operands**.)
-
-	class A(object):
-	    def __len__(self):
-		print('len called')
-		return 0
-
-	a = A()
-	print(bool(a))    # `__len__` called, False
-	print(a == False) # False
-	print(a == True)  # False
-
-	# call `__len__`, because there is no `__bool__`
-	if a:
-	    pass
-
-	class B(object):
-	    def __len__(self):
-		print('len called')
-		return 0
-	    def __bool__(self):
-		print('bool called')
-		return True
-
-	b = B()
-	print(bool(b))    # `__bool__` called, True
-	print(b == False) # False
-	print(b == True)  # False
-
-	# call `__bool__`
-	if b:
-	    pass
-
-    # a `__len__` called but b `__bool__` not called
-    # <__main__.A object at 0xb703998c>
-    print(a and b)
-    # `__bool__` called
-    # <__main__.A object at 0xb70f398c>
-    print(b and a)
-    # `__len__` called
-    # <__main__.B object at 0xb70f3a6c>
-    print(a or b)
-    # `__bool__` called
-    # <__main__.B object at 0xb70f3a6c>
-    print(b or a)
-    
-从以上可以看出  
-1) 优先调用 `__bool__`  
-2) 执行 `== False` 时，不会调用，且返回值为 `False`  
-3) 布尔运算 `and`, `or` 时，返回的是操作数
-
 ###chr()  
 ###ord()
 支持 Unicode 编码，合法范围为 0~0x10FFFF (Python2 中为 0~255)  
@@ -198,7 +130,7 @@ Return an iterator that applies function to every item of iterable, yielding the
 Retrieve the next item from the iterator by calling its `__next__()` method. **If default is given, it is returned if the iterator is exhausted, otherwise StopIteration is raised.**
 
 
-### open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)  
+###open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)  
     
     mode 'x' 	open for exclusive creation, failing if the file already exists
 
@@ -323,5 +255,5 @@ The left-to-right evaluation order of the iterables is guaranteed. This makes po
     >>> x == list(x2) and y == list(y2)
     True
 
-### __import__(name, globals=None, locals=None, fromlist=(), level=0)
+###`__import__`(name, globals=None, locals=None, fromlist=(), level=0)
 用于 hook

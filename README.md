@@ -5,6 +5,8 @@
 
 追加 `[*]` 则阅读完毕  
 
+version Python3.5.3
+
 1. [Introduction[*]](https://docs.python.org/3.5/library/intro.html)
 2. [Built-in Functions[*]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/functions.md)  
 3. [Built-in Constants[*]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/constants.md)  
