@@ -472,7 +472,134 @@ Attempting to hash an immutable sequence that contains unhashable values will re
 
 ###4.6.3. Mutable Sequence Types
 The operations in the following table are defined on mutable sequence types. The `collections.abc.MutableSequence` ABC is provided to make it easier to correctly implement these operations on custom sequence types.
+In the table s is an instance of a mutable sequence type, t is any **iterable object** and x is an arbitrary object that meets any type and value restrictions imposed by s (for example, `bytearray` only accepts integers that meet the value restriction `0 <= x <= 255`).
 
+注意是可迭代对象即可  
+
+    In [27]: def b():
+        ...:     for i in range(5):
+        ...:         yield i
+        ...:         
+    
+    In [28]: a = []
+    
+    In [29]: a.extend(b())
+    
+    In [30]: a
+    Out[30]: [0, 1, 2, 3, 4]
+
+
+####s[i:j:k] = t
+the elements of s[i:j:k] are replaced by those of t  
+
+    In [1]: a = [1,2,3,4,5,6,7,8]
+    
+    In [2]: a[0:8:2] = [2,4,6,8]
+    
+    In [3]: a
+    Out[3]: [2, 2, 4, 4, 6, 6, 8, 8]
+
+####s.append(x)
+appends x to the end of the sequence (**same as `s[len(s):len(s)] = [x]`**)
+
+类似的，`s.insert(i, x)` 和 `s[i:i] = x` 等价
+
+####s.extend(t)
+extends s with the contents of t (**for the most part** the same as `s[len(s):len(s)] = t`)
+大部分情况满足
+
+####s *= n
+updates s with its contents repeated n times. The value n is an integer, or an object implementing `__index__()`. Zero and negative values of n clear the sequence.  
+
+    In [31]: class A(object):
+        ...:     def __index__(self):
+        ...:         return 2
+        ...:     
+    
+    In [32]: b = [1,2] * A()
+    
+    In [33]: b
+    Out[33]: [1, 2, 1, 2]
+
+
+###4.6.4. Lists
+Lists are mutable sequences, typically used to store collections of homogeneous items (where the precise degree of similarity will vary by application).Lists implement all of the common and mutable sequence operations. Lists also provide the following additional method:
+####sort(*, key=None, reverse=None)
+This method sorts the list in place, using only `<` comparisons between items. Exceptions are not suppressed - if any comparison operations fail, the entire sort operation will fail (and **the list will likely be left in a partially modified state**).
+key specifies a function of one argument that is used to extract a comparison key from each list element (for example, key=`str.lower`). The key corresponding to each item in the list is calculated once and then used for the entire sorting process. The default value of `None` means that list items are sorted directly without calculating a separate key value.
+
+而在 Python2.x 的 `sort` 是接受是一个 `cmp` 参数
+
+
+    >>> l = ['a', 'B', 'c', 'D']
+    >>> l.sort()
+    >>> l
+    ['B', 'D', 'a', 'c']
+    >>> l.sort(cmp=lambda a, b: cmp(a.lower(), b.lower()))
+    >>> l
+    ['a', 'B', 'c', 'D']
+
+**The `functools.cmp_to_key()` utility is available to convert a 2.x style cmp function to a key function.**
+
+To remind users that it operates by side effect, it does not return the sorted sequence (use `sorted()` to explicitly request a new sorted list instance).
+
+`list.sort()` 修改原列表
+`sorted()`    返回新的列表  
+
+**The `sort()` method is guaranteed to be stable. A sort is stable if it guarantees not to change the relative order of elements that compare equal** — this is helpful for sorting in multiple passes (for example, sort by department, then by salary grade).
+
+###4.6.5. Tuples
+Tuples are immutable sequences, typically used to store collections of heterogeneous data (such as the 2-tuples produced by the `enumerate()` built-in). Tuples are also used for cases where an immutable sequence of homogeneous data is needed (such as allowing storage in a `set` or `dict` instance).  
+
+对于创建一个元组不仅有 `(a,)` 的形式，还有 `a, `  
+
+    In [16]: a = 1,
+    
+    In [17]: a.__class__
+    Out[17]: tuple
+
+或者使用 `tuple()` 将可迭代对象转换为元组  
+
+**Note that it is actually the comma which makes a tuple, not the parentheses**. **The parentheses are optional, except in the empty tuple case, or when they are needed to avoid syntactic ambiguity**. For example, f(a, b, c) is a function call with three arguments, while f((a, b, c)) is a function call with a 3-tuple as the sole argument.
+
+`,` 创建元组，而不是 `()`。`()` 是可选的，除非空元组或者需要避免二义性  
+
+For heterogeneous collections of data where access by name is clearer than access by index, `collections.namedtuple()` may be a more appropriate choice than a simple tuple object.
+
+###4.6.6. Ranges
+The `range` type represents an immutable sequence of numbers and is commonly used for looping a specific number of times in `for` loops.  
+
+####class range(stop)
+####class range(start, stop[, step])
+
+The arguments to the range constructor must be integers (either built-in `int` or any object that implements the `__index__` special method). If the step argument is omitted, it defaults to `1`. If the start argument is omitted, it defaults to `0`. If step is zero, `ValueError` is raised.
+
+**Ranges implement all of the common sequence operations except concatenation and repetition** (due to the fact that range objects can only represent sequences that follow a strict pattern and repetition and concatenation will usually violate that pattern).
+
+    >>> r = range(0, 20, 2)
+    >>> r
+    range(0, 20, 2)
+    >>> 11 in r
+    False
+    >>> 10 in r
+    True
+    >>> r.index(10)
+    5
+    >>> r[5]
+    10
+    >>> r[:5]
+    range(0, 10, 2)
+    >>> r[-1]
+    18
+
+
+因为 range 的元素不会产生重复，所以 `range().index()` 只有一个参数  
+
+**The advantage of the `range` type over a regular `list` or `tuple` is that a `range` object will always take the same (small) amount of memory,** no matter the size of the range it represents (as it only stores the `start`, `stop` and `step` values, calculating individual items and subranges as needed).
+
+Testing range objects for equality with `==` and `!=` compares them as sequences. That is, two range objects are considered equal if they represent the same sequence of values. (**Note that two range objects that compare equal might have different `start`, `stop` and `step` attributes, for example `range(0) == range(2, 1, 3)` or `range(0, 3, 2) == range(0, 4, 2)`.**)
+
+###4.7. Text Sequence Type — str
 
 
 
