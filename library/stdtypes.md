@@ -711,7 +711,9 @@ Return a copy of the string with leading characters removed. The chars argument 
     >>> 'www.example.com'.lstrip('cmowz.')
     'example.com'
 
-`rstrip`, `strip` 也是这样移除的是制定字符的排列组合  
+这个函数真正的功能是从左开始移除指定的字符，直至遇到一个非指定字符  
+
+`rstrip`, `strip` 也是这样的
 
 
 ####static str.maketrans(x[, y[, z]])
@@ -740,5 +742,114 @@ Return a list of the words in the string, using sep as the delimiter string. **I
 If sep is not specified or is `None`, a **different splitting algorithm** is applied: runs of consecutive whitespace are regarded as a single separator, and the result will contain no empty strings at the start or end if the string has leading or trailing whitespace(for example, `'  a b   c'.split()` returns `['a', 'b', 'c']`). 
 
 对应存在 `str.rsplit(sep=None, maxsplit=-1)`
+
+####str.splitlines([keepends])
+Return a list of the lines in the string, breaking at line boundaries. Line breaks are not included in the resulting list unless keepends is given and true.
+
+
+Representation 	| Description
+----------------|------------
+\n 	            | Line Feed
+\r 	            | Carriage Return
+\r\n            | Carriage Return + Line Feed
+\v or \x0b      | Line Tabulation
+\f or \x0c      | Form Feed
+\x1c 	        | File Separator
+\x1d 	        | Group Separator
+\x1e 	        | Record Separator
+\x85 	        | Next Line (C1 Control Code)
+\u2028 	        | Line Separator
+\u2029 	        | Paragraph Separator
+
+For example:  
+
+    >>> 'ab c\n\nde fg\rkl\r\n'.splitlines()
+    ['ab c', '', 'de fg', 'kl']
+    >>> 'ab c\n\nde fg\rkl\r\n'.splitlines(keepends=True)
+    ['ab c\n', '\n', 'de fg\r', 'kl\r\n']
+
+**Unlike `split()` when a delimiter string sep is given, this method returns an empty list for the empty string, and a terminal line break does not result in an extra line**:
+
+    >>> "".splitlines()
+    []
+    >>> "One line\n".splitlines()
+    ['One line']
+
+For comparison, split('\n') gives:
+
+    >>> ''.split('\n')
+    ['']
+    >>> 'Two lines\n'.split('\n')
+    ['Two lines', '']
+
+
+####str.swapcase()
+Return a copy of the string with uppercase characters converted to lowercase and vice versa. **Note that it is not necessarily true that     `s.swapcase().swapcase() == s`**.
+
+    In [8]: s = 'ß'
+    
+    In [9]: s.swapcase()
+    Out[9]: 'SS'
+    
+    In [10]: s.swapcase().swapcase()
+    Out[10]: 'ss'
+
+the German lowercase letter `'ß'` is equivalent to `"ss"`
+
+和这个有点关系 [`str.casefold()`](https://docs.python.org/3.5/library/stdtypes.html#str.casefold)  
+
+####str.title()
+Return a titlecased version of the string where words start with an uppercase character and the remaining characters are lowercase.
+
+For example:
+
+    >>> 'Hello world'.title()
+    'Hello World'
+
+
+
+The algorithm uses a simple language-independent definition of a word as groups of consecutive letters. The definition works in many contexts but it means that apostrophes in contractions and possessives form word boundaries, which may not be the desired result:
+
+    >>> "they're bill's friends from the UK".title()
+    "They'Re Bill'S Friends From The Uk"
+
+A workaround for apostrophes(`'`) can be constructed using regular expressions:
+
+    >>> import re
+    >>> def titlecase(s):
+    ...     return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
+    ...                   lambda mo: mo.group(0)[0].upper() +
+    ...                              mo.group(0)[1:].lower(),
+    ...                   s)
+    ...
+    >>> titlecase("they're bill's friends.")
+    "They're Bill's Friends."
+
+####str.translate(table)
+Return a copy of the string in which each character has been mapped through the given translation table. The table must be an object that implements indexing via `__getitem__()`, typically a `mapping` or `sequence`. When indexed by a Unicode ordinal (an integer), the table object can do any of the following: return a Unicode ordinal or a string, to map the character to one or more other characters; return `None`, to delete the character from the return string; or raise a `LookupError` exception, to map the character to itself.
+
+You can use `str.maketrans()` to create a translation map from character-to-character mappings in different formats.
+
+    In [22]: m = str.maketrans('123456789', 'ⅠⅡⅢⅣⅤⅥⅦⅧⅨ')
+    
+    In [23]: '1 2 3 4 5'.translate(m)
+    Out[23]: 'Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ'
+
+####str.upper()
+**Note that `str.upper().isupper()` might be `False` if s contains uncased characters or if the Unicode category of the resulting character(s) is not “Lu” (Letter, uppercase), but e.g. “Lt” (Letter, titlecase).**
+
+
+    >>> '1'.upper().isupper()
+    False
+    
+####str.zfill(width)
+Return a copy of the string left filled with ASCII `'0'` digits to make a string of length width. A leading sign prefix (`'+'`/`'-'`) is handled by inserting the padding after the sign character rather than before. The original string is returned if width is less than or equal to `len(s)`.
+
+    >>> "42".zfill(5)
+    '00042'
+    >>> "-42".zfill(5)
+    '-0042'
+    
+###4.7.2. printf-style String Formatting
 
 
