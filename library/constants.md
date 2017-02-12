@@ -17,7 +17,8 @@ The same as `...`. Special value used mostly in conjunction with extended slicin
         ...:                     else:
         ...:                         step = 1
         ...:                     value = key[index-1] + step
-        ...:                     while value < key[index+1]:
+        ...:                     end = key[index+1] if index+1 < len(key) else float('INF')
+        ...:                     while value < end:
         ...:                         yield value
         ...:                         value = value + step
         ...:                     continue
