@@ -12,7 +12,7 @@ The same as `...`. Special value used mostly in conjunction with extended slicin
         ...:         if isinstance(key, tuple):
         ...:             for index, value in enumerate(key):
         ...:                 if value is Ellipsis:
-        ...:                     if index > 0:
+        ...:                     if index > 1:
         ...:                         step = key[index-1] - key[index-2]
         ...:                     else:
         ...:                         step = 1
