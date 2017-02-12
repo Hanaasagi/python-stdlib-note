@@ -7,25 +7,28 @@ The same as `...`. Special value used mostly in conjunction with extended slicin
 
 一个常量代表 `...`，可以用来实现一个有趣的伪 `Haskell` `List`
 
-    In [1]: class InfiniteSeq(object):
-       ...:     def __getitem__(self, items):
-       ...:         if isinstance(items, tuple):
-       ...:             index = 0
-       ...:             while index < len(items):
-       ...:                 if items[index] is Ellipsis:
-       ...:                     step = items[index-1] - items[index-2] if index > 1 else 1
-       ...:                     value = items[index-1] + step
-       ...:                     end = items[index+1] if index+1 < len(items) else float('INF')
-       ...:                     while value <= end:
-       ...:                         yield value
-       ...:                         value = value + step
-       ...:                     index = index + 1
-       ...:                 else:
-       ...:                     yield items[index]
-       ...:                 index = index + 1
-       ...:         else:
-       ...:             raise SyntaxError
-       ...:         
+    In [57]:     class InfiniteSeq(object):
+        ...:         def __getitem__(self, items):
+        ...:             if isinstance(items, tuple):
+        ...:                 index = 0
+        ...:                 while index < len(items):
+        ...:                     if items[index] is Ellipsis:
+        ...:                         end = items[index+1] if index+1 < len(items) else float('INF')
+        ...:                         if index > 1:
+        ...:                             step = items[index-1] - items[index-2]
+        ...:                         else:
+        ...:                             step = 1 if end > items[index-1] else -1
+        ...:                         value = items[index-1] + step
+        ...:                         while (step > 0 and value <= end) or (step < 0 and value >= end):
+        ...:                             yield value
+        ...:                             value = value + step
+        ...:                         index = index + 1
+        ...:                     else:
+        ...:                         yield items[index]
+        ...:                     index = index + 1
+        ...:             else:
+        ...:                 raise SyntaxError
+        ...:           
     
     In [58]: l = InfiniteSeq()
     
