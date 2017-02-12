@@ -600,6 +600,145 @@ The arguments to the range constructor must be integers (either built-in `int` o
 Testing range objects for equality with `==` and `!=` compares them as sequences. That is, two range objects are considered equal if they represent the same sequence of values. (**Note that two range objects that compare equal might have different `start`, `stop` and `step` attributes, for example `range(0) == range(2, 1, 3)` or `range(0, 3, 2) == range(0, 4, 2)`.**)
 
 ###4.7. Text Sequence Type — str
+Textual data in Python is handled with `str` objects, or strings. Strings are immutable `sequences` of Unicode code points.
 
+**String literals that are part of a single expression and have only whitespace between them will be implicitly converted to a single string literal**. That is, `("spam " "eggs")` == `"spam eggs"`.
+
+所以字符串续行可以有以下两种形式  
+
+    In [7]: s = ('hello '
+       ...: 'world')
+    
+    In [8]: s = 'hello \
+       ...: world'
+
+There is also no mutable string type, but `str.join()` or `io.StringIO` can be used to efficiently construct strings from multiple fragments.
+
+Changed in version 3.3: For backwards compatibility with the Python 2 series, the `u` prefix is once again permitted on string literals. It has no effect on the meaning of string literals and cannot be combined with the `r` prefix.
+
+####class str(object='')
+####class str(object=b'', encoding='utf-8', errors='strict')
+Return a `string` version of object.
+If neither encoding nor errors is given, `str(object)` returns `object.__str__()`, which is the “informal” or nicely printable string representation of object. For string objects, this is the string itself. **If object does not have a `__str__()` method, then `str()` falls back to returning `repr(object)`**.
+
+If at least one of encoding or errors is given, object should be a `bytes-like object` (e.g. `bytes` or `bytearray`). In this case, if object is a bytes (or bytearray) object, then str(bytes, encoding, errors) is equivalent to bytes.decode(encoding, errors). 
+
+###4.7.1. String Methods
+####str.center(width[, fillchar])
+Return centered in a string of length width. Padding is done using the specified fillchar (default is an ASCII space). The original string is returned if width is less than or equal to len(s).
+
+这个 `width` 不是想在两侧添加的字符长度，而是返回的总长度  
+`str.ljust(width[, fillchar])`, `str.rjust(width[, fillchar])` 也是这样
+
+####str.count(sub[, start[, end]])
+计算区间中指定字符出现次数  
+
+####str.endswith(suffix[, start[, end]])
+Return `True` if the string ends with the specified suffix, otherwise return `False`. suffix can also be a tuple of suffixes to look for. With optional start, test beginning at that position. With optional end, stop comparing at that position.
+
+`str.endswith` 和 `str.startswith` 都可以指定区间，比如我们可以匹配时忽略标点  
+
+    In [34]: s = 'balabala, desu!'
+    
+    In [35]: s.endswith('desu', 0, -1)
+    Out[35]: True
+
+####str.expandtabs(tabsize=8)
+Return a copy of the string where all tab characters are replaced by one or more spaces, depending on the current column and the given tab size. Tab positions occur every tabsize characters (default is 8, giving tab positions at columns 0, 8, 16 and so on). To expand the string, the current column is set to zero and the string is examined character by character. If the character is a tab (`\t`), **one or more space characters are inserted** in the result until the current column is equal to the next tab position. (The tab character itself is not copied.) If the character is a newline (`\n`) or return (`\r`), it is copied and the current column is reset to zero. Any other character is copied unchanged and the current column is incremented by one regardless of how the character is represented when printed.
+
+####str.find(sub[, start[, end]])
+Return the lowest index in the string where substring sub is found within the slice `s[start:end]`. Optional arguments start and end are interpreted as in slice notation. Return `-1` if sub is not found.
+
+Note:The `find()` method should be used only if you need to know the position of sub. To check if sub is a substring or not, use the `in` operator:
+
+对应存在 `str.rfind`  
+
+
+####str.index(sub[, start[, end]])
+Like `find()`, but raise `ValueError` when the substring is not found.
+
+对应存在 `str.rindex`
+
+####str.format_map(mapping)
+Similar to `str.format(**mapping)`, except that `mapping` is used directly and not copied to a dict. This is useful if for example `mapping` is a dict subclass:
+
+
+    >>> class Default(dict):
+    ...     def __missing__(self, key):
+    ...         return key
+    ...
+    >>> '{name} was born in {country}'.format_map(Default(name='Guido'))
+    'Guido was born in country'
+
+####str.isdecimal() 
+####str.isdigit()
+####str.isnumeric()
+`str.isdecimal()` (Only Decimal Numbers)
+`str.isdigit()`   (Decimals, Subscripts, Superscripts)
+`str.isnumeric()` (Digits, Vulgar Fractions, Subscripts, Superscripts, Roman Numerals, Currency Numerators)
+
+    In [66]: '²'.isdecimal()
+    Out[66]: False
+    
+    In [67]: '²'.isdigit()
+    Out[67]: True
+    
+    In [68]: '²'.isnumeric()
+    Out[68]: True
+    
+    In [69]: 'Ⅵ'.isdecimal()
+    Out[69]: False
+    
+    In [70]: 'Ⅵ'.isdigit()
+    Out[70]: False
+    
+    In [71]: 'Ⅵ'.isnumeric()
+    Out[71]: True
+
+####str.isidentifier()
+Return true if the string is a valid identifier according to the language definition, section `Identifiers and keywords`.
+Use `keyword.iskeyword()` to test for reserved identifiers such as `def` and `class`.
+
+
+####str.isprintable()
+Return true if all characters in the string are printable or the string is empty, false otherwise. Nonprintable characters are those characters defined in the Unicode character database as “Other” or “Separator”, excepting the ASCII space (0x20) which is considered printable. (Note that printable characters in this context are those which should not be escaped when `repr()` is invoked on a string. It has no bearing on the handling of strings written to `sys.stdout` or `sys.stderr`.)
+
+
+####str.lstrip([chars])
+Return a copy of the string with leading characters removed. The chars argument is a string **specifying the set of characters to be removed**. If omitted or `None`, the chars argument defaults to removing whitespace. **The chars argument is not a prefix; rather, all combinations of its values are stripped**:
+
+
+    >>> 'www.example.com'.lstrip('cmowz.')
+    'example.com'
+
+`rstrip`, `strip` 也是这样移除的是制定字符的排列组合  
+
+
+####static str.maketrans(x[, y[, z]])
+This static method returns a translation table usable for `str.translate()`.
+If there is only one argument, it must be a dictionary mapping Unicode ordinals (integers) or characters (strings of length 1) to Unicode ordinals, strings (of arbitrary lengths) or `None`. Character keys will then be converted to ordinals.
+
+If there are two arguments, they must be strings of equal length, and in the resulting dictionary, each character in x will be mapped to the character at the same position in y. If there is a third argument, it must be a string, whose characters will be mapped to `None` in the result.
+
+    In [104]: str.maketrans('abc', 'ABC','a')
+    Out[104]: {97: None, 98: 66, 99: 67}
+
+####str.partition(sep)
+Split the string at the **first** occurrence of sep, and return a 3-tuple containing the part before the separator, the separator itself, and the part after the separator. If the separator is not found, return a 3-tuple containing the string itself, followed by two empty strings.
+
+按指定字符将字符串分割为三部分  
+
+对应存在 `str.rpartition(sep)`
+
+####str.replace(old, new[, count])
+Return a copy of the string with all occurrences of substring old replaced by new. If the optional argument count is given, only the first count occurrences are replaced.
+
+可以指定替换的次数
+
+####str.split(sep=None, maxsplit=-1)
+Return a list of the words in the string, using sep as the delimiter string. **If maxsplit is given, at most maxsplit splits are done (thus, the list will have at most `maxsplit+1` elements)**. If maxsplit is not specified or -1, then there is no limit on the number of splits (all possible splits are made).If sep is given, consecutive delimiters are not grouped together and are deemed to delimit empty strings (for example, `'1,,2'.split(',')` returns `['1', '', '2'])`.
+If sep is not specified or is `None`, a **different splitting algorithm** is applied: runs of consecutive whitespace are regarded as a single separator, and the result will contain no empty strings at the start or end if the string has leading or trailing whitespace(for example, `'  a b   c'.split()` returns `['a', 'b', 'c']`). 
+
+对应存在 `str.rsplit(sep=None, maxsplit=-1)`
 
 
