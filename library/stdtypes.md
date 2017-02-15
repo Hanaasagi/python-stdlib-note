@@ -851,5 +851,64 @@ Return a copy of the string left filled with ASCII `'0'` digits to make a string
     '-0042'
     
 ###4.7.2. printf-style String Formatting
+String objects have one unique built-in operation: the `%` operator (modulo). This is also known as the string formatting or interpolation operator. Given `format % values` (where format is a string), `%` conversion specifications in format are replaced with zero or more elements of values. The effect is similar to using the `sprintf()` in the C language.
+
+Note:The formatting operations described here exhibit a variety of quirks that lead to a number of common errors (such as failing to display tuples and dictionaries correctly). **Using the newer str.format() interface helps avoid these errors, and also provides a generally more powerful, flexible and extensible approach to formatting text.**
+
+具体使用见 [printf-style String Formatting](https://docs.python.org/3.5/library/stdtypes.html#printf-style-string-formatting)
+
+###4.8. Binary Sequence Types — bytes, bytearray, memoryview
+The core built-in types for manipulating binary data are `bytes` and `bytearray`. They are supported by `memoryview` which uses the `buffer protocol` to access the memory of other binary objects without needing to make a copy.
+
+###4.8.1. Bytes
+Bytes objects are immutable sequences of single bytes. Since many major binary protocols are based on the ASCII text encoding, bytes objects offer several methods that are only valid when working with ASCII compatible data and are closely related to string objects in a variety of other ways.
+Only ASCII characters are permitted in bytes literals (regardless of the declared source code encoding). Any binary values over 127 must be entered into bytes literals using the appropriate escape sequence.  
+As with string literals, bytes literals may also use a `r` prefix to disable processing of escape sequences. 
+
+####classmethod bytes.fromhex(string)
+This `bytes` class method returns a bytes object, decoding the given string object. The string must contain two hexadecimal digits per byte, with ASCII spaces being ignored.
+
+####bytes.hex()
+A reverse conversion function exists to transform a bytes object into its hexadecimal representation.
+
+
+`bytes` 和 `list` 可以相互转换
+
+
+    In [9]: bytes([46, 46, 46])
+    Out[9]: b'...'
+    
+    In [10]: list(b'...')
+    Out[10]: [46, 46, 46]
+
+
+
+**Note:For Python 2.x users: In the Python 2.x series, a variety of implicit conversions between 8-bit strings (the closest thing 2.x offers to a built-in binary data type) and Unicode strings were permitted. This was a backwards compatibility workaround to account for the fact that Python originally only supported 8-bit text, and Unicode text was a later addition. In Python 3.x, those implicit conversions are gone - conversions between 8-bit binary data and Unicode text must be explicit, and bytes and string objects will always compare unequal.** 
+
+Python3.x 不会隐式转换 `8-bit binary data` 和 `Unicode text`
+避免的 Python2.x 中的编码问题
+
+
+###4.8.2. Bytearray Objects
+`bytearray` objects are a **mutable** counterpart to `bytes` objects.
+
+`bytes` 不可变类型  
+`bytearray` 可变类型
+
+The representation of bytearray objects uses the bytes literal format `(bytearray(b'...'))` since it is often more useful than e.g. `bytearray([46, 46, 46])`. You can always convert a bytearray object into a list of integers using `list(b)`.
+
+####classmethod bytearray.fromhex(string)
+This `bytearray` class method returns bytearray object, decoding the given string object. The string must contain two hexadecimal digits per byte, with ASCII spaces being ignored.
+
+####bytearray.hex()
+A reverse conversion function exists to transform a bytearray object into its hexadecimal representation.
+
+###4.8.3. Bytes and Bytearray Operations
+
+
+
+
+
+
 
 
