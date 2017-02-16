@@ -644,7 +644,10 @@ Return `True` if the string ends with the specified suffix, otherwise return `Fa
     Out[35]: True
 
 ####str.expandtabs(tabsize=8)
-Return a copy of the string where all tab characters are replaced by one or more spaces, depending on the current column and the given tab size. Tab positions occur every tabsize characters (default is 8, giving tab positions at columns 0, 8, 16 and so on). To expand the string, the current column is set to zero and the string is examined character by character. If the character is a tab (`\t`), **one or more space characters are inserted** in the result until the current column is equal to the next tab position. (The tab character itself is not copied.) If the character is a newline (`\n`) or return (`\r`), it is copied and the current column is reset to zero. Any other character is copied unchanged and the current column is incremented by one regardless of how the character is represented when printed.
+Return a copy of the string where all tab characters are replaced by one or more spaces, depending on the current column and the given tab size. Tab positions occur every tabsize characters (default is 8, giving tab positions at columns 0, 8, 16 and so on). **To expand the string, the current column is set to zero and the string is examined character by character. If the character is a tab (`\t`), one or more space characters are inserted in the result until the current column is equal to the next tab position. (The tab character itself is not copied.) If the character is a newline (`\n`) or return (`\r`), it is copied and the current column is reset to zero.** Any other character is copied unchanged and the current column is incremented by one regardless of how the character is represented when printed.
+
+    In [2]: '0\t01\t012\t'.expandtabs(4)
+    Out[2]: '0   01  012 '
 
 ####str.find(sub[, start[, end]])
 Return the lowest index in the string where substring sub is found within the slice `s[start:end]`. Optional arguments start and end are interpreted as in slice notation. Return `-1` if sub is not found.
@@ -711,7 +714,7 @@ Return a copy of the string with leading characters removed. The chars argument 
     >>> 'www.example.com'.lstrip('cmowz.')
     'example.com'
 
-这个函数真正的功能是从左开始移除指定的字符，直至遇到一个非指定字符  
+参数中指定的字符串是作为集合存在的。这个方法从左开始剔除集合中出现的字符，直至遇到没有出现的。
 
 `rstrip`, `strip` 也是这样的
 
@@ -904,10 +907,378 @@ This `bytearray` class method returns bytearray object, decoding the given strin
 A reverse conversion function exists to transform a bytearray object into its hexadecimal representation.
 
 ###4.8.3. Bytes and Bytearray Operations
+Both bytes and bytearray objects support the common sequence operations. They interoperate not just with operands of the same type, but with any `bytes-like object`. Due to this flexibility, they can be freely mixed in operations without causing errors. However, **the return type of the result may depend on the order of operands**.
+
+    In [14]: (bytes(0) + bytearray(0)).__class__
+    Out[14]: bytes
+    
+    In [15]: (bytearray(0) + bytes(0)).__class__
+    Out[15]: bytearray
+
+`bytes` 和 `bytearray` 的方法和 `str` 的差不多，不过参数需要为 `bytes-like object`(An object that supports the Buffer Protocol and can export a C-contiguous buffer. This includes all `bytes`, `bytearray`, and `array.array` objects, as well as many common `memoryview` objects) 
 
 
+Some bytes and bytearray operations assume the use of ASCII compatible binary formats, and hence should be avoided when working with arbitrary binary data. These restrictions are covered below.
+
+**Note: Using these ASCII based operations to manipulate binary data that is not stored in an ASCII based format may lead to data corruption.**
+
+The following methods on bytes and bytearray objects can be used with arbitrary binary data.
 
 
+####bytes.count(sub[, start[, end]])
+####bytearray.count(sub[, start[, end]])
+
+####bytes.decode(encoding="utf-8", errors="strict")
+####bytearray.decode(encoding="utf-8", errors="strict")
+
+####bytes.endswith(suffix[, start[, end]])
+####bytearray.endswith(suffix[, start[, end]])
+
+####bytes.find(sub[, start[, end]])
+####bytearray.find(sub[, start[, end]])
+
+    In [29]: bytes('你好世界', encoding='utf-8').find(bytes('好', encoding='utf-8'))
+    Out[29]: 3
+    In [300]: bytes('Y好', encoding='utf-8').find(bytes('好', encoding='utf-8'))
+    Out[30]: 1
+
+**返回的字节中的索引**
+
+####bytes.index(sub[, start[, end]])
+####bytearray.index(sub[, start[, end]])
+
+####bytes.join(iterable)
+####bytearray.join(iterable)
+Return a bytes or bytearray object which is the concatenation of the binary data sequences in the `iterable` iterable. A `TypeError` will be raised if there are any values in iterable that are not `bytes-like objects`, including str objects. 
+
+####static bytes.maketrans(from, to)
+####static bytearray.maketrans(from, to)
+
+####bytes.partition(sep)
+####bytearray.partition(sep)
+
+####bytes.replace(old, new[, count])
+####bytearray.replace(old, new[, count])
+
+####bytes.rfind(sub[, start[, end]])
+####bytearray.rfind(sub[, start[, end]])
+
+####bytes.rindex(sub[, start[, end]])
+####bytearray.rindex(sub[, start[, end]])
+
+####bytes.rpartition(sep)
+####bytearray.rpartition(sep)
+
+####bytes.startswith(prefix[, start[, end]])
+####bytearray.startswith(prefix[, start[, end]])
+
+####bytes.translate(table[, delete])
+####bytearray.translate(table[, delete])
+
+这个和 [`str.translate(table)`](https://docs.python.org/3.5/library/stdtypes.html#str.translate)用法不相同
+
+The following methods on bytes and bytearray objects have default behaviours that assume the use of ASCII compatible binary formats, but can still be used with arbitrary binary data by passing appropriate arguments. 
+
+####bytes.center(width[, fillbyte])
+####bytearray.center(width[, fillbyte])
+
+####bytes.ljust(width[, fillbyte])
+####bytearray.ljust(width[, fillbyte])
+
+####bytes.lstrip([chars])
+####bytearray.lstrip([chars])
+
+####bytes.rsplit(sep=None, maxsplit=-1)
+####bytearray.rsplit(sep=None, maxsplit=-1)
+
+####bytes.rstrip([chars])
+####bytearray.rstrip([chars])
+
+####bytes.split(sep=None, maxsplit=-1)
+####bytearray.split(sep=None, maxsplit=-1)
+
+####bytes.strip([chars])
+####bytearray.strip([chars])
+
+The following methods on bytes and bytearray objects assume the use of ASCII compatible binary formats and **should not be applied to arbitrary binary data.** 
+
+####bytes.capitalize()
+####bytearray.capitalize()
+Return a copy of the sequence with each byte interpreted as an ASCII character, and the first byte capitalized and the rest lowercased. **Non-ASCII byte values are passed through unchanged**.
+
+####bytes.isalpha()
+####bytearray.isalpha()
+
+####bytes.isdigit()
+####bytearray.isdigit()
+
+####bytes.isupper()
+####bytearray.isupper()
+
+####bytes.lower()
+####bytearray.lower()
+
+####bytes.splitlines(keepends=False)
+####bytearray.splitlines(keepends=False)
+
+####bytes.swapcase()
+####bytearray.swapcase()
+Unlike `str.swapcase()`, **it is always the case that `bin.swapcase().swapcase() == bin` for the binary versions**. Case conversions are symmetrical in ASCII, even though that is not generally true for arbitrary Unicode code points.
+
+####bytes.title()
+####bytearray.title()
+
+####bytes.upper()
+####bytearray.upper()
+
+####bytes.zfill(width)
+####bytearray.zfill(width)
+
+###4.8.4. printf-style Bytes Formatting
+[printf-style Bytes Formatting](https://docs.python.org/3.5/library/stdtypes.html#printf-style-bytes-formatting)
+
+###4.8.5. Memory Views
+`memoryview` objects allow Python code to access the internal data of an object that supports the `buffer protocol` without copying.
+
+####class memoryview(obj)
+Create a `memoryview` that references obj. obj must support the buffer protocol. Built-in objects that support the buffer protocol include `bytes` and `bytearray`.
+
+A `memoryview` has the notion of an element, which is the atomic memory unit handled by the originating object obj. For many simple types such as `bytes` and `bytearray`, an element is a single byte, but other types such as `array.array` may have bigger elements.
+
+`len(view)` is equal to the length of `tolist`
+
+A `memoryview` supports slicing and indexing to expose its data. One-dimensional(一维) slicing will result in a subview:
+
+    >>> v = memoryview(b'abcefg')
+    >>> v[1]
+    98
+    >>> v[-1]
+    103
+    >>> v[1:4]
+    <memory at 0x7f3ddc9f4350>
+    >>> bytes(v[1:4])
+    b'bce'
+
+If `format` is one of the native format specifiers from the `struct` module, indexing with an integer or a tuple of integers is also supported and returns a single element with the correct type. One-dimensional memoryviews can be indexed with an integer or a one-integer tuple. Multi-dimensional memoryviews can be indexed with tuples of exactly ndim integers where ndim is the number of dimensions. Zero-dimensional memoryviews can be indexed with the empty tuple.
+
+Here is an example with a non-byte format:
+
+    >>> import array
+    >>> a = array.array('l', [-11111111, 22222222, -33333333, 44444444])
+    >>> m = memoryview(a)
+    >>> m[0]
+    -11111111
+    >>> m[-1]
+    44444444
+    >>> m[::2].tolist()
+    [-11111111, -33333333]
+
+If the underlying object is writable, the memoryview supports one-dimensional slice assignment. **Resizing is not allowed**:
+
+    >>> data = bytearray(b'abcefg')
+    >>> v = memoryview(data)
+    >>> v.readonly
+    False
+    >>> v[0] = ord(b'z')
+    >>> data
+    bytearray(b'zbcefg')
+    >>> v[1:4] = b'123'
+    >>> data
+    bytearray(b'z123fg')
+    >>> v[2:3] = b'spam'
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ValueError: memoryview assignment: lvalue and rvalue have different structures
+    >>> v[2:6] = b'spam'
+    >>> data
+    bytearray(b'z1spam')
+
+
+One-dimensional memoryviews of hashable (read-only) types with formats `‘B’`, `‘b’` or `‘c’` are also hashable. The hash is defined as `hash(m) == hash(m.tobytes())`:
+
+    >>> v = memoryview(b'abcefg')
+    >>> hash(v) == hash(b'abcefg')
+    True
+    >>> hash(v[2:4]) == hash(b'ce')
+    True
+    >>> hash(v[::-2]) == hash(b'abcefg'[::-2])
+    True
+
+
+`memoryview` has several methods:
+
+####`__eq__(exporter)`
+A memoryview and a `PEP 3118` exporter are equal if their **shapes are equivalent** and if **all corresponding values are equal** when the operands’ respective format codes are interpreted using struct syntax.
+
+For the subset of struct format strings currently supported by `tolist()`, v and w are equal if `v.tolist() == w.tolist()`:
+
+    >>> import array
+    >>> a = array.array('I', [1, 2, 3, 4, 5])
+    >>> b = array.array('d', [1.0, 2.0, 3.0, 4.0, 5.0])
+    >>> c = array.array('b', [5, 3, 1])
+    >>> x = memoryview(a)
+    >>> y = memoryview(b)
+    >>> x == a == y == b
+    True
+    >>> x.tolist() == a.tolist() == y.tolist() == b.tolist()
+    True
+    >>> z = y[::-2]
+    >>> z == c
+    True
+    >>> z.tolist() == c.tolist()
+    True
+
+**If either format string is not supported by the `struct` module, then the objects will always compare as unequal** (even if the format strings and buffer contents are identical):
+
+    >>> from ctypes import BigEndianStructure, c_long
+    >>> class BEPoint(BigEndianStructure):
+    ...     _fields_ = [("x", c_long), ("y", c_long)]
+    ...
+    >>> point = BEPoint(100, 200)
+    >>> a = memoryview(point)
+    >>> b = memoryview(point)
+    >>> a == point
+    False
+    >>> a == b
+    False
+    
+####tobytes()
+Return the data in the buffer as a bytestring. This is equivalent to calling the `bytes` constructor on the memoryview
+
+####hex()
+Return a string object containing two hexadecimal digits for each byte in the buffer.
+
+####tolist()
+Return the data in the buffer as a list of elements.
+
+####release()
+Release the underlying buffer exposed by the memoryview object. Many objects take special actions when a view is held on them (for example, a `bytearray` would temporarily forbid resizing); therefore, calling release() is handy to remove these restrictions (and free any dangling resources) as soon as possible.
+
+After this method has been called, any further operation on the view raises a `ValueError` (except `release()` itself which can be called multiple times):
+
+    >>> m = memoryview(b'abc')
+    >>> m.release()
+    >>> m[0]
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ValueError: operation forbidden on released memoryview object
+
+The context management protocol can be used for a similar effect, using the `with` statement:
+
+    >>> with memoryview(b'abc') as m:
+    ...     m[0]
+    ...
+    97
+    >>> m[0]
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ValueError: operation forbidden on released memoryview object
+
+####cast(format[, shape])
+Cast a memoryview to a new format or shape. shape defaults to [`byte_length//new_itemsize`], which means that the result view will be one-dimensional. The return value is a new memoryview, but **the buffer itself is not copied**. 
+
+    >>> b = bytearray(b'zyz')
+    >>> x = memoryview(b)
+    >>> x[0] = b'a'
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    ValueError: memoryview: invalid value for format "B"
+    >>> y = x.cast('c')
+    >>> y[0] = b'a'
+    >>> b
+    bytearray(b'ayz')
+
+
+There are also several readonly attributes available:
+####obj
+The underlying object of the memoryview:
+
+    >>> b  = bytearray(b'xyz')
+    >>> m = memoryview(b)
+    >>> m.obj is b
+    True
+
+####nbytes
+`nbytes == product(shape) * itemsize == len(m.tobytes())`. This is the amount of space in bytes that the array would use in a contiguous representation. It is not necessarily equal to `len(m)`:
+
+    >>> import array
+    >>> a = array.array('i', [1,2,3,4,5])
+    >>> m = memoryview(a)
+    >>> len(m)
+    5
+    >>> m.nbytes
+    20
+    >>> y = m[::2]
+    >>> len(y)
+    3
+    >>> y.nbytes
+    12
+    >>> len(y.tobytes())
+    12
+
+Multi-dimensional arrays:
+
+    >>> import struct
+    >>> buf = struct.pack("d"*12, *[1.5*x for x in range(12)])
+    >>> x = memoryview(buf)
+    >>> y = x.cast('d', shape=[3,4])
+    >>> y.tolist()
+    [[0.0, 1.5, 3.0, 4.5], [6.0, 7.5, 9.0, 10.5], [12.0, 13.5, 15.0, 16.5]]
+    >>> len(y)
+    3
+    >>> y.nbytes
+    96
+
+####readonly
+A bool indicating whether the memory is read only.
+
+####format
+A string containing the format (in struct module style) for each element in the view. 
+
+####itemsize
+The size in bytes of each element of the memoryview
+
+####ndim
+An integer indicating how many dimensions of a multi-dimensional array the memory represents.
+
+    In [40]: import struct
+    
+    In [41]: buf = struct.pack('i'*12, *list(range(12)))
+    
+    In [42]: x = memoryview(buf)
+    
+    In [43]: y = x.cast('i', shape=[2,2,3])
+    
+    In [44]: y.tolist()
+    Out[44]: [[[0, 1, 2], [3, 4, 5]], [[6, 7, 8], [9, 10, 11]]]
+    
+    In [45]: y.ndim
+    Out[45]: 3
+
+
+####shape
+A tuple of integers the length of `ndim` giving the shape of the memory as an N-dimensional array.
+
+    In [46]: y.shape
+    Out[46]: (2, 2, 3)
+
+####strides
+A tuple of integers the length of `ndim` giving the size in bytes to access each element for each dimension of the array.
+
+    In [47]: y.strides
+    Out[47]: (24, 12, 4)
+
+####suboffsets
+Used internally for PIL-style arrays. The value is informational only.
+
+####c_contiguous
+A bool indicating whether the memory is C-contiguous.
+
+####f_contiguous
+A bool indicating whether the memory is Fortran contiguous.
+
+####contiguous
+A bool indicating whether the memory is contiguous.
 
 
 
