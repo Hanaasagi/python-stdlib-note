@@ -1,6 +1,6 @@
 #[4. Built-in Types](https://docs.python.org/3.5/library/stdtypes.html)  
 
-###4.1. Truth Value Testing  
+##4.1. Truth Value Testing  
 Any object can be tested for truth value, for use in an **if** or **while** condition or as **operand of the Boolean operations** below. The following values are considered false:
 
     None
@@ -69,14 +69,14 @@ Operations and built-in functions that have a Boolean result always return 0 or 
 3) 布尔运算 `and`, `or` 时，返回的是一侧的操作数
 
 
-###4.2. Boolean Operations — and, or, not
+##4.2. Boolean Operations — and, or, not
 `x or y`  相当于 `if x is false, then y, else x`  
 `x and y` 相当于 `if x is false, then x, else y`  
 `not`     相当于 `if x is false, then True, else False`
 
 `and` 和 `or` 具有短路特性  
 
-###4.3. Comparisons  
+##4.3. Comparisons  
 
 Comparisons can be **chained** arbitrarily; for example, `x < y <= z` is equivalent to `x < y and y <= z`, except that y is **evaluated only once** (but in both cases z is not evaluated at all when x < y is found to be false).
 
@@ -134,7 +134,7 @@ The behavior of the is and is not operators cannot be customized; also they can 
 Two more operations with the same syntactic priority, in and not in, are supported only by sequence types (below).
 
 
-###4.4. Numeric Types — int, float, complex
+##4.4. Numeric Types — int, float, complex
 
 There are three distinct numeric types: integers, floating point numbers, and complex numbers. In addition, **Booleans are a subtype of integers**. Integers have unlimited precision. Floating point numbers are usually implemented using double in C; information about the precision and internal representation of floating point numbers for the machine on which your program is running is available in **`sys.float_info`**. 
 
@@ -312,7 +312,7 @@ To clarify the above rules, here’s some example Python code, equivalent to the
         hash_value = -2
     return hash_value
     
-###4.5. Iterator Types
+##4.5. Iterator Types
 Python supports a concept of iteration over containers. This is implemented using two distinct methods; these are used to allow user-defined classes to support iteration. Sequences, described below in more detail, always support the iteration methods.
 
 **One method needs to be defined for container objects to provide iteration support**:
@@ -426,7 +426,7 @@ Python’s generators provide a convenient way to implement the iterator protoco
     1
     ...
     
-###4.6. Sequence Types — list, tuple, range
+##4.6. Sequence Types — list, tuple, range
 There are three basic sequence types: lists, tuples, and range objects. Additional sequence types tailored for processing of binary data and text strings are described in dedicated sections.
 
 ###4.6.1. Common Sequence Operations
@@ -599,7 +599,7 @@ The arguments to the range constructor must be integers (either built-in `int` o
 
 Testing range objects for equality with `==` and `!=` compares them as sequences. That is, two range objects are considered equal if they represent the same sequence of values. (**Note that two range objects that compare equal might have different `start`, `stop` and `step` attributes, for example `range(0) == range(2, 1, 3)` or `range(0, 3, 2) == range(0, 4, 2)`.**)
 
-###4.7. Text Sequence Type — str
+##4.7. Text Sequence Type — str
 Textual data in Python is handled with `str` objects, or strings. Strings are immutable `sequences` of Unicode code points.
 
 **String literals that are part of a single expression and have only whitespace between them will be implicitly converted to a single string literal**. That is, `("spam " "eggs")` == `"spam eggs"`.
@@ -860,7 +860,7 @@ Note:The formatting operations described here exhibit a variety of quirks that l
 
 具体使用见 [printf-style String Formatting](https://docs.python.org/3.5/library/stdtypes.html#printf-style-string-formatting)
 
-###4.8. Binary Sequence Types — bytes, bytearray, memoryview
+##4.8. Binary Sequence Types — bytes, bytearray, memoryview
 The core built-in types for manipulating binary data are `bytes` and `bytearray`. They are supported by `memoryview` which uses the `buffer protocol` to access the memory of other binary objects without needing to make a copy.
 
 ###4.8.1. Bytes
@@ -1280,6 +1280,353 @@ A bool indicating whether the memory is Fortran contiguous.
 ####contiguous
 A bool indicating whether the memory is contiguous.
 
+##4.9. Set Types — set, frozenset
+A set object is an **unordered** collection of **distinct** `hashable` objects. Common uses include membership testing, removing duplicates from a sequence, and computing mathematical operations such as intersection, union, difference, and symmetric difference. sets do not support indexing, slicing, or other sequence-like behavior.
+
+There are currently two built-in set types, `set` and `frozenset`. The `set` type is mutable — the contents can be changed using methods like `add()` and `remove()`. Since it is mutable, it has no hash value and cannot be used as either a dictionary key or as an element of another set. The `frozenset` type is immutable and `hashable` — its contents cannot be altered after it is created; it can therefore be used as a dictionary key or as an element of another set.
+
+Non-empty sets (not frozensets) can be created by placing a comma-separated list of elements within braces, for example: `{'jack', 'sjoerd'}`, in addition to the `set` constructor.
+
+####class set([iterable])
+####class frozenset([iterable])
+Return a new set or frozenset object whose elements are taken from iterable. **The elements of a set must be hashable**. To represent sets of sets, the inner sets must be frozenset objects. 
+
+
+instances of `set` and `frozenset` provide the following operations:
+
+####isdisjoint(other)
+Return `True` if the set has no elements in common with other. Sets are disjoint if and only if their intersection is the empty set.
+
+
+集合的比较操作是集合运算
+####issubset(other)
+####set <= other
+Test whether every element in the set is in other.
+
+####set < other
+Test whether the set is a proper subset of other, that is, `set <= other and set != other`.
+
+
+####issuperset(other)
+####set >= other
+Test whether every element in other is in the set.
+
+####set > other
+Test whether the set is a proper superset of other, that is, `set >= other and set != other`.
+
+####union(*others)
+####set | other | ...
+Return a new set with elements from the set and all others.
+
+####intersection(*others)
+####set & other & ...
+Return a new set with elements common to the set and all others.
+
+####difference(*others)
+####set - other - ...
+Return a new set with elements in the set that are not in the others.
+
+####symmetric_difference(other)
+####set ^ other
+Return a new set with elements in either the set or other but not both.
+
+####copy()
+Return a new set with a shallow copy of s.
+
+Note, the non-operator versions of `union()`, `intersection()`, `difference()`, and `symmetric_difference()`, `issubset()`, and `issuperset()` methods will accept any iterable as an argument. In contrast, their operator based counterparts require their arguments to be sets. This precludes error-prone constructions like `set('abc') & 'cbs'` in favor of the more readable `set('abc').intersection('cbs')`.
+
+Instances of set are compared to instances of frozenset based on their members. For example, **`set('abc') == frozenset('abc')` returns True and so does` set('abc') in set([frozenset('abc')])`**.
+
+
+Binary operations that mix `set` instances with `frozenset` **return the type of the first operand**. For example: `frozenset('ab') | set('bc')` returns an instance of `frozenset`.
+
+
+####set.update(*others)
+####set |= other | ...
+Update the set, adding elements from all others.
+
+####set.intersection_update(*others)
+####set &= other & ...
+Update the set, keeping only elements found in it and all others.
+
+####difference_update(*others)
+####set -= other | ...
+Update the set, removing elements found in others.
+
+####symmetric_difference_update(other)
+####set ^= other
+Update the set, keeping only elements found in either set, but not in both.
+
+####add(elem)
+Add element elem to the set.
+
+####remove(elem)
+Remove element elem from the set. Raises `KeyError` if elem is not contained in the set.
+
+####discard(elem)
+Remove element elem from the set if it is present.
+
+作用同 `remove`，只是不会在元素不存在时抛出异常  
+
+####pop()
+Remove and return an arbitrary element from the set. Raises `KeyError` if the set is empty.
+
+####clear()
+Remove all elements from the set.
+
+Note, the non-operator versions of the `update()`, `intersection_update()`, `difference_update()`, and `symmetric_difference_update()` methods will accept any iterable as an argument.
+
+Note, the elem argument to the `__contains__()`, `remove()`, and `discard()` methods may be a set. **To support searching for an equivalent frozenset, the elem set is temporarily mutated during the search and then restored. During the search, the elem set should not be read or mutated since it does not have a meaningful value.**
+
+查找是否有相同的 `frozenset` 期间，传入的参数会发生改变，并重新存储。所以这个期间不能读取或者改变参数的值  
+
+##4.10. Mapping Types — dict
+A mapping object maps hashable values to arbitrary objects. Mappings are mutable objects. There is currently only one standard mapping type, the dictionary. 
+
+Note however, that **since computers store floating-point numbers as approximations it is usually unwise to use them as dictionary keys**.
+
+####class dict(**kwarg)
+####class dict(mapping, **kwarg)
+####class dict(iterable, **kwarg)
+If no positional argument is given, an empty dictionary is created. If a positional argument is given and it is a mapping object, a dictionary is created with the same key-value pairs as the mapping object. Otherwise, the positional argument must be an iterable object. **Each item in the iterable must itself be an iterable with exactly two objects**. The first object of each item becomes a key in the new dictionary, and the second object the corresponding value. If a key occurs more than once, the last value for that key becomes the corresponding value in the new dictionary.
+
+`dict()` 也支持 `iterable` 参数
+
+    >>> a = dict(one=1, two=2, three=3)
+    >>> b = {'one': 1, 'two': 2, 'three': 3}
+    >>> c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+    >>> d = dict([('two', 2), ('one', 1), ('three', 3)])
+    >>> e = dict({'three': 3, 'one': 1}, two=2)
+    >>> a == b == c == d == e
+    True
+
+####d[key]
+Return the item of d with key key. Raises a KeyError if key is not in the map.
+
+If a subclass of dict **defines a method `__missing__()`** and key is not present, the `d[key]` operation calls that method with the key key as argument. 
+
+    >>> class Counter(dict):
+    ...     def __missing__(self, key):
+    ...         return 0
+    >>> c = Counter()
+    >>> c['red']
+    0
+    >>> c['red'] += 1
+    >>> c['red']
+    1
+
+
+####iter(d)
+Return an iterator over the keys of the dictionary. This is a shortcut for `iter(d.keys())`.
+
+
+####classmethod fromkeys(seq[, value])
+Create a new dictionary with keys from seq and values set to value.
+`fromkeys()` is a class method that returns a new dictionary. value defaults to `None`.
+
+    In [26]: dict.fromkeys(['a', 'b'], 'lala')
+    Out[26]: {'a': 'lala', 'b': 'lala'}
+
+
+####pop(key[, default])
+If key is in the dictionary, remove it and return its value, else return default. If default is not given and key is not in the dictionary, a `KeyError` is raised.
+
+可以指定默认值  
+
+####popitem()
+Remove and return an arbitrary (key, value) pair from the dictionary.
+
+####setdefault(key[, default])
+If key is in the dictionary, return its value. If not, insert key with a value of default and return default. default defaults to `None`.
+
+    In [29]: d = dict(a=1, b=2)
+    
+    In [30]: d.setdefault('b', 10)
+    Out[30]: 2
+    
+    In [31]: d
+    Out[31]: {'a': 1, 'b': 2}
+    
+    In [32]: d.setdefault('c', 10)
+    Out[32]: 10
+    
+    In [33]: d
+    Out[33]: {'a': 1, 'b': 2, 'c': 10}
 
 
 
+####update([other])
+Update the dictionary with the key/value pairs from other, overwriting existing keys. Return `None`.
+
+`update()` accepts either another dictionary object or an iterable of key/value pairs (as tuples or other iterables of length two). If keyword arguments are specified, the dictionary is then updated with those key/value pairs:`d.update(red=1, blue=2)`.
+
+    In [34]: d = dict(a=1, b=2)
+    
+    In [35]: d.update(zip(['c', 'd'], [3, 4]))
+    
+    In [36]: d
+    Out[36]: {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+
+
+###4.10.1. Dictionary view objects
+The objects returned by `dict.keys()`, `dict.values()` and `dict.items()` are view objects. They provide a dynamic view on the dictionary’s entries, which means that **when the dictionary changes, the view reflects these changes**.
+
+    In [2]: d = {'a':1}
+    
+    In [3]: k = d.keys()
+    
+    In [4]: k.__class__
+    Out[4]: dict_keys
+    
+    In [5]: k
+    Out[5]: dict_keys(['a'])
+    
+    In [6]: d.update(b=2)
+    
+    In [7]: k
+    Out[7]: dict_keys(['a', 'b'])
+
+####iter(dictview)
+Return an iterator over the keys, values or items (represented as tuples of `(key, value)`) in the dictionary.
+
+Keys and values are iterated over in an arbitrary order which is non-random, varies across Python implementations, and depends on the dictionary’s history of insertions and deletions. **If keys, values and items views are iterated over with no intervening modifications to the dictionary, the order of items will directly correspond.** This allows the creation of `(value, key)` pairs using zip(): `pairs = zip(d.values(), d.keys())`. 
+
+Iterating views while adding or deleting entries in the dictionary may raise a `RuntimeError` or fail to iterate over all entries.
+
+对字典进行迭代时不能插入或删除  
+
+Keys views are set-like since their entries are unique and hashable. If all values are hashable, so that `(key, value)` pairs are unique and hashable, then the items view is also set-like. (Values views are not treated as set-like since the entries are generally not unique.) For set-like views, all of the operations defined for the abstract base class `collections.abc.Set` are available (for example, `==`, `<`, or `^`).
+
+##4.11. Context Manager Types
+[上下文管理器](https://docs.python.org/3.5/library/stdtypes.html#context-manager-types)
+
+##4.12. Other Built-in Types
+The interpreter supports several other kinds of objects. Most of these support only one or two operations.
+
+###4.12.1. Modules
+The only special operation on a module is attribute access: `m.name`, where m is a module and name accesses a name defined in m‘s symbol table. 
+
+A special attribute of every module is `__dict__`. This is the dictionary containing the module’s symbol table. Modifying this dictionary will actually change the module’s symbol table, but direct assignment to the `__dict__` attribute is not possible (you can write `m.__dict__['a'] = 1`, which defines m.a to be 1, but you can’t write `m.__dict__ = {}`). **Modifying `__dict__` directly is not recommended.**
+
+###4.12.2. Classes and Class Instances
+See [Objects, values and types](https://docs.python.org/3.5/reference/datamodel.html#objects) and [Class definitions](https://docs.python.org/3.5/reference/compound_stmts.html#class) for these.
+
+###4.12.3. Functions
+**Function objects** are created by function definitions. **The only operation on a function object is to call it: `func(argument-list)`**.
+
+There are really two flavors of function objects: built-in functions and user-defined functions. Both support the same operation (to call the function), but the implementation is different, hence the different object types.
+
+###4.12.4. Methods
+Methods are functions that are called using the attribute notation. There are two flavors: built-in methods (such as `append()` on lists) and class instance methods. Built-in methods are described with the types that support them.
+
+方法调用时隐式传递` self`
+
+**If you access a method (a function defined in a class namespace) through an instance, you get a special object: a bound method (also called instance method) object. When called, it will add the `self` argument to the argument list. Bound methods have two special read-only attributes: `m.__self__` is the object on which the method operates, and `m.__func__` is the function implementing the method. Calling `m(arg-1, arg-2, ..., arg-n)` is completely equivalent to calling `m.__func__(m.__self__, arg-1, arg-2, ..., arg-n)`.**
+
+    In [10]: class A(object):
+        ...:     def func(self):
+        ...:         return 0
+        ...:     
+    
+    In [11]: a = A()
+    
+    In [12]: a.func
+    Out[12]: <bound method A.func of <__main__.A object at 0x7f2b2028ae48>>
+    
+    In [13]: a.func.__func__(a.func.__self__)
+    Out[13]: 0
+
+Like function objects, bound method objects support getting arbitrary attributes. However, **since method attributes are actually stored on the underlying function object (`meth.__func__`), setting method attributes on bound methods is disallowed.** Attempting to set an attribute on a method results in an `AttributeError` being raised. In order to set a method attribute, you need to explicitly set it on the underlying function object:
+
+    >>> class C:
+    ...     def method(self):
+    ...         pass
+    ...
+    >>> c = C()
+    >>> c.method.whoami = 'my name is method'  # can't set on the method
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    AttributeError: 'method' object has no attribute 'whoami'
+    >>> c.method.__func__.whoami = 'my name is method'
+    >>> c.method.whoami
+    'my name is method'
+
+形如 `obj.method` 获取的是一个特殊的 `bound method object` 只能从中获取任意的属性，而不能设置。如果想要为方法设置属性则要获取 `function object`  
+
+###4.12.5. Code Objects
+Code objects are used by the implementation to represent “pseudo-compiled” executable Python code such as a function body. **They differ from function objects because they don’t contain a reference to their global execution environment**. Code objects are returned by the built-in `compile()` function and can be extracted from function objects through their `__code__` attribute. See also the code module.
+
+A code object can be executed or evaluated by passing it (instead of a source string) to the `exec()` or `eval()` built-in functions.
+
+###4.12.6. Type Objects
+Type objects represent the various object types. An object’s type is accessed by the built-in function `type()`. 
+
+###4.12.7. The Null Object
+There is exactly one null object, named `None` (a built-in name). `type(None)()` produces the same singleton.
+
+###4.12.8. The Ellipsis Object
+This object is commonly used by slicing (see `Slicings`). It supports no special operations. There is exactly one ellipsis object, named `Ellipsis` (a built-in name). `type(Ellipsis)()` produces the `Ellipsis` singleton.
+
+It is written as `Ellipsis` or ```...``.
+
+###4.12.9. The NotImplemented Object
+This object is returned from comparisons and binary operations when they are asked to operate on types they don’t support. See Comparisons for more information. There is exactly one `NotImplemented` object. `type(NotImplemented)()` produces the singleton instance.
+
+It is written as `NotImplemented`.
+
+###4.12.10. Boolean Values
+Boolean values are the two constant objects `False` and `True`. The built-in function `bool()` can be used to convert any value to a Boolean, if the value can be interpreted as a truth value (see section Truth Value Testing above).
+
+###4.12.11. Internal Objects
+See [The standard type hierarchy](https://docs.python.org/3.5/reference/datamodel.html#types) for this information. It describes stack frame objects, traceback objects, and slice objects.
+
+##4.13. Special Attributes
+The implementation adds a few special read-only attributes to several object types, where they are relevant. **Some of these are not reported by the `dir()` built-in function**.
+
+####`object.__dict__`
+
+A dictionary or other mapping object used to store an object’s (writable) attributes.
+
+instance.__class__
+
+    The class to which a class instance belongs.
+
+class.__bases__
+
+    The tuple of base classes of a class object.
+
+####definition.__name__`
+The name of the class, function, method, descriptor, or generator instance.
+
+####`definition.__qualname__`
+The qualified name of the class, function, method, descriptor, or generator instance.
+
+什么是一个 qualified name
+
+A dotted name showing the “path” from a module’s global scope to a class, function or method defined in that module, as defined in PEP 3155. For top-level functions and classes, the qualified name is the same as the object’s name:
+
+    >>> class C:
+    ...     class D:
+    ...         def meth(self):
+    ...             pass
+    ...
+    >>> C.__qualname__
+    'C'
+    >>> C.D.__qualname__
+    'C.D'
+    >>> C.D.meth.__qualname__
+    'C.D.meth'
+    >>> C.D.meth.__name__
+    'meth'
+
+####`class.__mro__`
+This attribute is a tuple of classes that are considered when looking for base classes during method resolution.
+
+####class.mro()
+This method can be overridden by a metaclass to customize the method resolution order for its instances. It is called at class instantiation, and its result is stored in `__mro__`.
+
+####`class.__subclasses__()`
+Each class keeps a list of weak references to its immediate subclasses. This method returns a list of all those references still alive. Example:
+
+    >>> int.__subclasses__()
+    [<class 'bool'>]

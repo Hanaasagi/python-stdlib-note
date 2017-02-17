@@ -17,14 +17,14 @@ version Python3.5.3
     4.3. Comparisons[+]  
     4.4. Numeric Types — int, float, complex[+]  
     4.5. Iterator Types[+]  
-    4.6. Sequence Types — list, tuple, range  
-    4.7. Text Sequence Type — str  
-    4.8. Binary Sequence Types — bytes, bytearray, memoryview  
-    4.9. Set Types — set, frozenset  
-    4.10. Mapping Types — dict  
-    4.11. Context Manager Types  
-    4.12. Other Built-in Types  
-    4.13. Special Attributes  
+    4.6. Sequence Types — list, tuple, range[+]  
+    4.7. Text Sequence Type — str[+]  
+    4.8. Binary Sequence Types — bytes, bytearray, memoryview[+]  
+    4.9. Set Types — set, frozenset[+]  
+    4.10. Mapping Types — dict[+]  
+    4.11. Context Manager Types[+]  
+    4.12. Other Built-in Types[+]  
+    4.13. Special Attributes[+]  
 5. Built-in Exceptions  
     5.1. Base classes  
     5.2. Concrete exceptions  
