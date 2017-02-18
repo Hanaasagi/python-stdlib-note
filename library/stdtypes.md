@@ -100,7 +100,7 @@ Non-identical instances of a class normally compare as non-equal unless the clas
 
 Instances of a class cannot be ordered with respect to other instances of the same class, or other types of object, unless the class defines enough of the methods `__lt__()`, `__le__()`, `__gt__()`, and `__ge__()` (in general, `__lt__()` and `__eq__()` are sufficient, if you want the conventional meanings of the comparison operators).
 
-可以简单的通过 `__lt__` 和 `__eq__` 来实现比较运算  
+可以简单的通过 `__lt__` 和 `__eq__` 来实现比较运算（`a <= b` 替代为 `a < b or a ==b`，如果想直接实现则需要 `__le__`）  
 
     In [86]: class Num(object):
         ...:     def __init__(self, num):
