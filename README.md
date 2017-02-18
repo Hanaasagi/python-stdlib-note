@@ -11,7 +11,7 @@ version Python3.5.3
 2. [Built-in Functions[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/functions.md)  
 3. [Built-in Constants[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/constants.md)  
     3.1. Constants added by the site module[+]  
-4. [Built-in Types](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/stdtypes.md)  
+4. [Built-in Types[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/stdtypes.md)  
     4.1. Truth Value Testing[+]  
     4.2. Boolean Operations — and, or, not[+]  
     4.3. Comparisons[+]  
@@ -25,11 +25,11 @@ version Python3.5.3
     4.11. Context Manager Types[+]  
     4.12. Other Built-in Types[+]  
     4.13. Special Attributes[+]  
-5. Built-in Exceptions  
-    5.1. Base classes  
-    5.2. Concrete exceptions  
-    5.3. Warnings  
-    5.4. Exception hierarchy  
+5. [Built-in Exceptions[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/exceptions.md)  
+    5.1. Base classes[+]  
+    5.2. Concrete exceptions[+]  
+    5.3. Warnings[+]  
+    5.4. Exception hierarchy[+]  
 6. Text Processing Services  
     6.1. string — Common string operations  
     6.2. re — Regular expression operations  
