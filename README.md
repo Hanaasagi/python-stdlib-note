@@ -31,7 +31,7 @@ version Python3.5.3
     5.3. Warnings[+]  
     5.4. Exception hierarchy[+]  
 6. Text Processing Services  
-    6.1. string — Common string operations  
+    6.1. [string — Common string operations[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/string.md)  
     6.2. re — Regular expression operations  
     6.3. difflib — Helpers for computing deltas  
     6.4. textwrap — Text wrapping and filling  
