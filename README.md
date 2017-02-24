@@ -33,7 +33,7 @@ version Python3.5.3
 6. Text Processing Services  
     6.1. [string — Common string operations[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/string.md)  
     6.2. [re — Regular expression operations[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/re.md)  
-    6.3. difflib — Helpers for computing deltas  
+    6.3. [difflib — Helpers for computing deltas[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/difflib.md)  
     6.4. textwrap — Text wrapping and filling  
     6.5. unicodedata — Unicode Database  
     6.6. stringprep — Internet String Preparation  
