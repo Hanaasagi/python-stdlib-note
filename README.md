@@ -35,10 +35,10 @@ version Python3.5.3
     6.2. [re — Regular expression operations[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/re.md)  
     6.3. [difflib — Helpers for computing deltas[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/difflib.md)  
     6.4. [textwrap — Text wrapping and filling[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/textwrap.md)  
-    6.5. unicodedata — Unicode Database  
-    6.6. stringprep — Internet String Preparation  
-    6.7. readline — GNU readline interface  
-    6.8. rlcompleter — Completion function for GNU readline  
+    6.5. unicodedata — Unicode Database[+]  
+    6.6. stringprep — Internet String Preparation[+]  
+    6.7. [readline — GNU readline interface[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/readline.md)  
+    6.8. rlcompleter — Completion function for GNU readline[+]  
 7. Binary Data Services  
     7.1. struct — Interpret bytes as packed binary data  
     7.2. codecs — Codec registry and base classes  
