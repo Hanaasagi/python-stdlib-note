@@ -1,7 +1,7 @@
-[6.7. readline — GNU readline interface](https://docs.python.org/3.5/library/readline.html)
+#[6.7. readline — GNU readline interface](https://docs.python.org/3.5/library/readline.html)
 
 
-`GNU readline` 库提供了一些函数供程序调用，来允许用户修改他们键入的命令。通过这个库可以达到以下目的  
+通过这个模块来调用 GNU readline 接口可以实现以下要求  
 
 1) `<TAB>` 补全
 2) `↑` 或 `↓` 浏览历史命令
