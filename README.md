@@ -30,7 +30,7 @@ version Python3.5.3
     5.2. Concrete exceptions[+]  
     5.3. Warnings[+]  
     5.4. Exception hierarchy[+]  
-6. Text Processing Services  
+6. Text Processing Services[+]  
     6.1. [string — Common string operations[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/string.md)  
     6.2. [re — Regular expression operations[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/re.md)  
     6.3. [difflib — Helpers for computing deltas[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/difflib.md)  
@@ -40,7 +40,7 @@ version Python3.5.3
     6.7. [readline — GNU readline interface[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/readline.md)  
     6.8. rlcompleter — Completion function for GNU readline[+]  
 7. Binary Data Services  
-    7.1. struct — Interpret bytes as packed binary data  
+    7.1. [struct — Interpret bytes as packed binary data[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/struct.md)  
     7.2. codecs — Codec registry and base classes  
 8. Data Types  
     8.1. datetime — Basic date and time types  
