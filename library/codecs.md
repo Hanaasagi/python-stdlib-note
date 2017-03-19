@@ -165,3 +165,15 @@ Set the state of the encoder to state. state must be an encoder state returned b
 ##7.2.2. Encodings and Unicode
 
 ##7.2.3. Standard Encodings
+
+##7.2.4. Python Specific Encodings
+
+##7.2.5. encodings.idna — Internationalized Domain Names in Applications
+
+
+    In [4]: 'www.二次元.org'.encode('idna')
+    Out[4]: b'www.xn--4kqz9du10b.org'
+
+    In [5]: b'www.xn--4kqz9du10b.org'.decode('idna')
+    Out[5]: 'www.二次元.org'
+
