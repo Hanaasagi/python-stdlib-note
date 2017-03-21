@@ -43,7 +43,7 @@ version Python3.5.3
     7.1. [struct — Interpret bytes as packed binary data[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/struct.md)  
     7.2. [codecs — Codec registry and base classes[+]](https://github.com/Hanaasagi/python-stdlib-note/blob/master/library/codecs.md)  
 8. Data Types  
-    8.1. datetime — Basic date and time types  
+    8.1. datetime — Basic date and time types[+]  
     8.2. calendar — General calendar-related functions  
     8.3. collections — Container datatypes  
     8.4. collections.abc — Abstract Base Classes for Containers  
