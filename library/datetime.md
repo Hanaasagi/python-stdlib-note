@@ -1,15 +1,15 @@
-#[8.1. datetime — Basic date and time types](https://docs.python.org/3.5/library/datetime.html)
+# [8.1. datetime — Basic date and time types](https://docs.python.org/3.5/library/datetime.html)
 
 
 The `datetime` module supplies classes for manipulating dates and times in both simple and complex ways. While date and time arithmetic is supported, the focus of the implementation is on efficient attribute extraction for output formatting and manipulation. For related functionality, see also the `time` and `calendar` modules.
 
-###datetime.MINYEAR
+### datetime.MINYEAR
 The smallest year number allowed in a `date` or `datetime` object. MINYEAR is 1.
 
-###datetime.MAXYEAR
+### datetime.MAXYEAR
 The largest year number allowed in a `date` or `datetime` object. MAXYEAR is 9999.
 
-##8.1.1. Available Types
+## 8.1.1. Available Types
 几种类型间的继承关系  
 
     object
@@ -21,10 +21,10 @@ The largest year number allowed in a `date` or `datetime` object. MAXYEAR is 999
             datetime
 
 
-##8.1.2. timedelta Objects
+## 8.1.2. timedelta Objects
 A timedelta object represents a duration, the difference between two dates or times.
 
-###class datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
+### class datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0)
 
 All arguments are optional and default to 0. Arguments may be integers or floats, and may be positive or negative.
 
@@ -35,13 +35,13 @@ All arguments are optional and default to 0. Arguments may be integers or floats
 - An hour is converted to 3600 seconds.
 - A week is converted to 7 days.
 
-####timedelta.min
+#### timedelta.min
 The most negative timedelta object, `timedelta(-999999999)`.
 
-####timedelta.max
+#### timedelta.max
 The most positive timedelta object, `timedelta(days=999999999, hours=23, minutes=59, seconds=59, microseconds=999999)`.
 
-####timedelta.resolution
+#### timedelta.resolution
 The smallest possible difference between non-equal timedelta objects, `timedelta(microseconds=1)`.
 
 Example usage:
@@ -74,52 +74,52 @@ In addition to the operations listed above `timedelta` objects support certain a
 **`timedelta` objects are hashable (usable as dictionary keys), support efficient pickling**, and in Boolean contexts, a timedelta object is considered to be true if and only if it isn’t equal to timedelta(0).
 
 
-##8.1.3. date Objects
+## 8.1.3. date Objects
 
-###class datetime.date(year, month, day)
+### class datetime.date(year, month, day)
 All arguments are required. Arguments may be integers, in the following ranges:
 
 - MINYEAR <= year <= MAXYEAR
 - 1 <= month <= 12
 - 1 <= day <= number of days in the given month and year
 
-###classmethod date.today()
+### classmethod date.today()
 Return the current local date. This is equivalent to `date.fromtimestamp(time.time())`.
 
-###classmethod date.fromtimestamp(timestamp)
-Return the local date corresponding to the POSIX timestamp, such as is returned by `time.time()`. This may raise `OverflowError`, if the timestamp is out of the range of values supported by the platform C `localtime()` function, and `OSError` on `localtime()` failure. 
+### classmethod date.fromtimestamp(timestamp)
+Return the local date corresponding to the POSIX timestamp, such as is returned by `time.time()`. This may raise `OverflowError`, if the timestamp is out of the range of values supported by the platform C `localtime()` function, and `OSError` on `localtime()` failure.
 **It’s common for this to be restricted to years from 1970 through 2038.** Note that on non-POSIX systems that include leap seconds in their notion of a timestamp, leap seconds are ignored by `fromtimestamp()`.
 
-###classmethod date.fromordinal(ordinal)
+### classmethod date.fromordinal(ordinal)
 Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1. `ValueError` is raised unless `1 <= ordinal <= date.max.toordinal()`. For any date d, `date.fromordinal(d.toordinal()) == d`.
 
     In [41]: datetime.date.toordinal(datetime.date.today())
     Out[41]: 736389
-    
+
     In [42]: datetime.date.fromordinal(736389)
     Out[42]: datetime.date(2017, 3, 1)
 
 
 Class attributes:
 
-###date.min
+### date.min
 The earliest representable date, `date(MINYEAR, 1, 1)`.
 
-###date.max
+### date.max
 The latest representable date, `date(MAXYEAR, 12, 31)`.
 
-###date.resolution
+### date.resolution
 The smallest possible difference between non-equal date objects, `timedelta(days=1)`.
 
 Instance attributes (read-only):
 
-###date.year
+### date.year
 Between MINYEAR and MAXYEAR inclusive.
 
-###date.month
+### date.month
 Between 1 and 12 inclusive.
 
-###date.day
+### date.day
 Between 1 and the number of days in the given month of the given year.
 
 
@@ -128,23 +128,23 @@ Between 1 and the number of days in the given month of the given year.
 
 Instance methods:
 
-###date.replace(year, month, day)
+### date.replace(year, month, day)
 Return a date with the same value, except for those parameters given new values by whichever keyword arguments are specified. For example, if `d == date(2002, 12, 31)`, then `d.replace(day=26) == date(2002, 12, 26)`.
 
 
-###date.timetuple()
+### date.timetuple()
 Return a `time.struct_time` such as returned by `time.localtime()`. The hours, minutes and seconds are 0, and the DST flag is -1. `d.timetuple()` is equivalent to `time.struct_time((d.year, d.month, d.day, 0, 0, 0, d.weekday(), yday, -1))`, where `yday = d.toordinal() - date(d.year, 1, 1).toordinal() + 1` is the day number within the current year starting with 1 for January 1st.
 
-###date.toordinal()
+### date.toordinal()
 Return the proleptic Gregorian ordinal of the date, where January 1 of year 1 has ordinal 1. For any date object d, `date.fromordinal(d.toordinal()) == d`.
 
-###date.weekday()
+### date.weekday()
 Return the day of the week as an integer, where Monday is 0 and Sunday is 6. For example, `date(2002, 12, 4).weekday() == 2`, a Wednesday.
 
-###date.isoweekday()
+### date.isoweekday()
 Return the day of the week as an integer, where Monday is 1 and Sunday is 7. For example, `date(2002, 12, 4).isoweekday() == 3`, a Wednesday.
 
-###date.isocalendar()
+### date.isocalendar()
 Return a 3-tuple, (ISO year, ISO week number, ISO weekday).
 
 
@@ -156,19 +156,19 @@ For example, **2004 begins on a Thursday, so the first week of ISO year 2004 beg
 2004.1.1   Thursday
 
 
-###date.isoformat()
+### date.isoformat()
 Return a string representing the date in ISO 8601 format, ‘YYYY-MM-DD’. For example, `date(2002, 12, 4).isoformat() == '2002-12-04'`.
 
-###`date.__str__()`
+### `date.__str__()`
 For a date d, str(d) is equivalent to `d.isoformat()`.
 
-###date.ctime()
+### date.ctime()
 Return a string representing the date, for example ``date(2002, 12, 4).ctime() == 'Wed Dec 4 00:00:00 2002'`. `d.ctime()` is equivalent to `time.ctime(time.mktime(d.timetuple()))` on platforms where the native C ctime() function (which `time.ctime()` invokes, but which `date.ctime()` does not invoke) conforms to the C standard.
 
-###date.strftime(format)
+### date.strftime(format)
 Return a string representing the date, controlled by an explicit format string. Format codes referring to hours, minutes or seconds will see 0 values.
 
-###`date.__format__(format)`
+### `date.__format__(format)`
 Same as `date.strftime()`. This makes it possible to specify a format string for a date object when using `str.format()`.
 
 Example of counting days to an event:
@@ -222,10 +222,10 @@ Example of working with date:
     >>> 'The {1} is {0:%d}, the {2} is {0:%B}.'.format(d, "day", "month")
     'The day is 11, the month is March.'
 
-##8.1.4. datetime Objects
+## 8.1.4. datetime Objects
 A `datetime` object is a single object containing all the information from a `date` object and a `time` object.
 
-###class datetime.datetime(year, month, day, hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
+### class datetime.datetime(year, month, day, hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
 
 The year, month and day arguments are required. tzinfo may be `None`, or an instance of a tzinfo subclass. The remaining arguments may be integers, in the following ranges:
 
@@ -239,106 +239,102 @@ The year, month and day arguments are required. tzinfo may be `None`, or an inst
 
 If an argument outside those ranges is given, ValueError is raised.
 
-###classmethod datetime.today()
+### classmethod datetime.today()
 Return the current local datetime, with tzinfo `None`. This is equivalent to `datetime.fromtimestamp(time.time())`.
 
-###classmethod datetime.now(tz=None)
+### classmethod datetime.now(tz=None)
 Return the current local date and time. If optional argument tz is None or not specified, this is like `today()`
-If tz is not `None`, it must be an instance of a tzinfo subclass, and the current date and time are converted to tz’s time zone. In this case the result is equivalent to `tz.fromutc(datetime.utcnow().replace(tzinfo=tz))`. 
+If tz is not `None`, it must be an instance of a tzinfo subclass, and the current date and time are converted to tz’s time zone. In this case the result is equivalent to `tz.fromutc(datetime.utcnow().replace(tzinfo=tz))`.
 
-###classmethod datetime.utcnow()
+### classmethod datetime.utcnow()
 Return the current UTC date and time, with tzinfo `None`. This is like `now()`, but returns the current UTC date and time, as a naive datetime object. An aware current UTC datetime can be obtained by calling `datetime.now(timezone.utc)`.
 
-###classmethod datetime.fromtimestamp(timestamp, tz=None)
+### classmethod datetime.fromtimestamp(timestamp, tz=None)
 Return the local date and time corresponding to the POSIX timestamp, such as is returned by `time.time()`. If optional argument tz is `None` or not specified, the timestamp is converted to the platform’s local date and time, and the returned `datetime` object is naive.
 
 If tz is not `None`, it must be an instance of a tzinfo subclass, and the timestamp is converted to tz’s time zone. In this case the result is equivalent to `tz.fromutc(datetime.utcfromtimestamp(timestamp).replace(tzinfo=tz))`.
 
-###classmethod datetime.utcfromtimestamp(timestamp)
+### classmethod datetime.utcfromtimestamp(timestamp)
 Return the UTC datetime corresponding to the POSIX timestamp, with tzinfo `None`.
 
-###classmethod datetime.fromordinal(ordinal)
-Return the datetime corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1. 
+### classmethod datetime.fromordinal(ordinal)
+Return the datetime corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1.
 
-###classmethod datetime.combine(date, time)
+### classmethod datetime.combine(date, time)
 Return a new `datetime` object whose date components are equal to the given `date` object’s, and whose time components and tzinfo attributes are equal to the given `time` object’s. For any `datetime` object d, `d == datetime.combine(d.date(), d.timetz())`. If date is a `datetime` object, its time components and tzinfo attributes are ignored.
 
-###classmethod datetime.strptime(date_string, format)
+### classmethod datetime.strptime(date_string, format)
 Return a datetime corresponding to date_string, parsed according to format. This is equivalent to `datetime(*(time.strptime(date_string, format)[0:6]))`.
 
 Class attributes:
 
-###datetime.min
+### datetime.min
 The earliest representable datetime, `datetime(MINYEAR, 1, 1, tzinfo=None)`.
 
-###datetime.max
+### datetime.max
 The latest representable datetime, `datetime(MAXYEAR, 12, 31, 23, 59, 59, 999999, tzinfo=None)`.
 
-###datetime.resolution
+### datetime.resolution
 The smallest possible difference between non-equal datetime objects, `timedelta(microseconds=1)`.
 
 Instance attributes (read-only):
 
-###datetime.year
+### datetime.year
 Between MINYEAR and MAXYEAR inclusive.
 
-###datetime.month
+### datetime.month
 Between 1 and 12 inclusive.
 
-###datetime.day
+### datetime.day
 Between 1 and the number of days in the given month of the given year.
 
-###datetime.hour
+### datetime.hour
 In range(24).
 
-###datetime.minute
+### datetime.minute
 In range(60).
 
-###datetime.second
+### datetime.second
 In range(60).
 
-###datetime.microsecond
+### datetime.microsecond
 In range(1000000).
 
-###datetime.tzinfo
+### datetime.tzinfo
 The object passed as the tzinfo argument to the datetime constructor, or None if none was passed.
 
 Instance methods:
 
-###datetime.date()
+### datetime.date()
 Return `date` object with same year, month and day.
 
-###datetime.time()
-Return `time` object with same hour, minute, second and microsecond. tzinfo is None. 
+### datetime.time()
+Return `time` object with same hour, minute, second and microsecond. tzinfo is None.
 
-###datetime.timetz()
+### datetime.timetz()
 Return `time` object with same hour, minute, second, microsecond, and tzinfo attributes.
 
-###datetime.replace([year[, month[, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]]]]])
-Return a `datetime` with the same attributes, except for those attributes given new values by whichever keyword arguments are specified. 
+### datetime.replace([year[, month[, day[, hour[, minute[, second[, microsecond[, tzinfo]]]]]]]])
+Return a `datetime` with the same attributes, except for those attributes given new values by whichever keyword arguments are specified.
 
-###datetime.astimezone(tz=None)
+### datetime.astimezone(tz=None)
 Return a `datetime` object with new tzinfo attribute tz, adjusting the date and time data so the result is the same UTC time as self, but in tz‘s local time.
 
 If called without arguments (or with tz=None) the system local timezone is assumed.
 
-###datetime.utcoffset()
+### datetime.utcoffset()
 If tzinfo is `None`, returns `None`, else returns `self.tzinfo.utcoffset(self)`, and raises an exception if the latter doesn’t return `None`, or a timedelta object representing a whole number of minutes with magnitude less than one day.
 
 
-###datetime.dst()
+### datetime.dst()
 If tzinfo is `None`, returns `None`, else returns `self.tzinfo.dst(self)`, and raises an exception if the latter doesn’t return `None`, or a timedelta object representing a whole number of minutes with magnitude less than one day.
 
-###datetime.tzname()
+### datetime.tzname()
 If tzinfo is `None`, returns `None`, else returns `self.tzinfo.tzname(self)`, raises an exception if the latter doesn’t return None or a string object,
 
-###datetime.timetuple()
-Return a `time.struct_time` such as returned by `time.localtime(). d.timetuple()` is equivalent to `time.struct_time((d.year, d.month, d.day, d.hour, d.minute, d.second, d.weekday(), yday, dst))`, where `yday = d.toordinal() - date(d.year, 1, 1).toordinal() + 1` is the day number within the current year starting with 1 for January 1st. 
+### datetime.timetuple()
+Return a `time.struct_time` such as returned by `time.localtime(). d.timetuple()` is equivalent to `time.struct_time((d.year, d.month, d.day, d.hour, d.minute, d.second, d.weekday(), yday, dst))`, where `yday = d.toordinal() - date(d.year, 1, 1).toordinal() + 1` is the day number within the current year starting with 1 for January 1st.
 
 
-###datetime.utctimetuple()
+### datetime.utctimetuple()
 If datetime instance d is naive, this is the same as `d.timetuple()` except that tm_isdst is forced to 0 regardless of what `d.dst()` returns. DST is never in effect for a UTC time.
-
-
-
-

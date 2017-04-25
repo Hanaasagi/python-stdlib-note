@@ -1,24 +1,24 @@
-#[2. Built-in Functions](https://docs.python.org/3.5/library/functions.html)
+# [2. Built-in Functions](https://docs.python.org/3.5/library/functions.html)
 
-###bin(x)
-###hex(x)
-###ord(x)
+### bin(x)
+### hex(x)
+### ord(x)
 
- If x is not a Python int object, it has to define an __index__() method that returns an integer.
+ If x is not a Python int object, it has to define an `__index__()` method that returns an integer.
 
-###chr()  
-###ord()
+### chr()  
+### ord()
 支持 Unicode 编码，合法范围为 0~0x10FFFF (Python2 中为 0~255)  
 
 
-###dir([object])
+### dir([object])
 **Without arguments, return the list of names in the current local scope**. With an argument, attempt to return a list of valid attributes for that object.
-If the object has a method named `__dir__()`, this method will be called and must return the list of attributes. If the object does not provide `__dir__()`, the function tries its best to gather information from the object’s `__dict__` attribute, if defined, and from its type object. 
+If the object has a method named `__dir__()`, this method will be called and must return the list of attributes. If the object does not provide `__dir__()`, the function tries its best to gather information from the object’s `__dict__` attribute, if defined, and from its type object.
 
-###divmod(a, b)
+### divmod(a, b)
 same as `(a // b, a % b)` for integers, `(math.floor(a / b), a % b)` for floats  
 
-###enumerate(iterable, start=0)
+### enumerate(iterable, start=0)
 注意第二个参数  
 
 等价实现  
@@ -29,45 +29,45 @@ same as `(a // b, a % b)` for integers, `(math.floor(a / b), a % b)` for floats
             yield n, elem
             n += 1
 
-###filter(function, iterable)
+### filter(function, iterable)
 If function is None, the identity function is assumed, that is, all elements of iterable that are false are removed.  
 
-###class float([x])  
+### class float([x])  
 
 The argument may also be a string representing a NaN (not-a-number), or a positive or negative infinity.  
 
     In [11]: float('nan')
     Out[11]: nan
-    
+
     In [12]: float('inf')
     Out[12]: inf
-    
+
     In [13]: float('-inf')
     Out[13]: -inf
 
 For a general Python object `x`, `float(x)` delegates to `x.__float__()`.
 
 
-###class frozenset([iterable])  
+### class frozenset([iterable])  
 不可变 `set`, 可以用来作为字典的键值  
 
     In [30]: b = set([1,2])
-    
+
     In [31]: hash(b)
     ---------------------------------------------------------------------------
     TypeError                                 Traceback (most recent call last)
     <ipython-input-31-7a1b7036ac14> in <module>()
     ----> 1 hash(b)
-    
+
     TypeError: unhashable type: 'set'
-    
+
     In [32]: b = frozenset([1,2])
-    
+
     In [33]: hash(b)
     Out[33]: -924239479
 
 
-###id(object)
+### id(object)
 
 Return the “identity” of an object. This is an integer which is guaranteed to be unique and constant for this object during its lifetime. **Two objects with non-overlapping lifetimes may have the same id() value.**
 
@@ -77,13 +77,13 @@ Return the “identity” of an object. This is an integer which is guaranteed t
 
     In [5]: id([1]) == id([2])
     Out[5]: True
-    
+
     In [6]: id(set([1])) == id(set([2]))
     Out[6]: True
 
 `[1]` 没有被任何变量引用，所以使用结束后，便会被回收掉，不会和 `[2]` 的生命周期产生重叠  
 
-###iter(object[, sentinel])  
+### iter(object[, sentinel])  
 Return an iterator object. The first argument is interpreted very differently depending on the presence of the second argument. Without a second argument, object must be a collection object which supports the **iteration protocol** (the `__iter__()` method), or it must support the **sequence protocol** (the `__getitem__()` method with integer arguments starting at 0). If it does not support either of those protocols, TypeError is raised. **If the second argument, sentinel, is given, then object must be a callable object.** The iterator created in this case will call object with no arguments for each call to its `__next__()` method; if the value returned is equal to sentinel, StopIteration will be raised, otherwise the value will be returned.
 
 第一种实现 `__getitem__`  
@@ -91,7 +91,7 @@ Return an iterator object. The first argument is interpreted very differently de
     class A(object):
         def __getitem__(self, index):
             pass
-            
+
 第二种实现 `__iter__`
 
     class A(object):
@@ -100,7 +100,7 @@ Return an iterator object. The first argument is interpreted very differently de
             return self
         def __next__(self):
             pass
-            
+
 第三种实现 `__call__`，只能用在给定哨兵的情况下    
 
     class A(object):
@@ -113,25 +113,25 @@ Return an iterator object. The first argument is interpreted very differently de
         for line in iter(fp.readline, ''):
             process_line(line)
 
-###map(function, iterable, ...)
+### map(function, iterable, ...)
 Return an iterator that applies function to every item of iterable, yielding the results. **If additional iterable arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel.** With multiple iterables, the iterator stops when the shortest iterable is exhausted. For cases where the function inputs are already arranged into argument tuples, see itertools.starmap().
 
-###max(iterable, *[, key, default])
-###max(arg1, arg2, *args[, key])
+### max(iterable, *[, key, default])  
+### max(arg1, arg2, *args[, key])
 若出现并列最大的，则取第一个遇到的，和 `sort` 一致  
 取前 n 个 `heapq.nlargest(1, iterable, key=keyfunc)`
 
-###memoryview(obj)
+### memoryview(obj)
 可以建立内存映射
 
 
-###next(iterator[, default])
+### next(iterator[, default])
 
 Retrieve the next item from the iterator by calling its `__next__()` method. **If default is given, it is returned if the iterator is exhausted, otherwise StopIteration is raised.**
 
 
-###open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)  
-    
+### open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)  
+
     mode 'x' 	open for exclusive creation, failing if the file already exists
 
 'x' 和 `w` 相似，用来写入文件。不过 `x` 要求文件不存在  
@@ -154,16 +154,16 @@ The following example uses the dir_fd parameter of the os.open() function to ope
     >>> os.close(dir_fd)  # don't leak a file descriptor
 
 
-###pow(x, y[, z])
+### pow(x, y[, z])
 Return x to the power y; if z is present, return x to the power y, modulo z (**computed more efficiently than pow(x, y) % z**). The two-argument form pow(x, y) is equivalent to using the power operator: x**y.  
 这个计算方法 SICP 中提到过  
 
 
-###round(number[, ndigits])
-The behavior of `round()` for floats can be surprising: for example, `round(2.675, 2)` gives `2.67` instead of the expected `2.68`. This is not a bug: it’s a result of the fact that most decimal fractions can’t be represented exactly as a float. See Floating Point Arithmetic: Issues and Limitations for more information. 
+### round(number[, ndigits])
+The behavior of `round()` for floats can be surprising: for example, `round(2.675, 2)` gives `2.67` instead of the expected `2.68`. This is not a bug: it’s a result of the fact that most decimal fractions can’t be represented exactly as a float. See Floating Point Arithmetic: Issues and Limitations for more information.
 
 
-###sorted(iterable[, key][, reverse])
+### sorted(iterable[, key][, reverse])
 
 Return a new sorted list from the items in iterable.
 
@@ -175,13 +175,13 @@ reverse is a boolean value. If set to True, then the list elements are sorted as
 
 可以直接返回逆序，不需要 `reversed(sorted())`
 
-###super([type[, object-or-type]])
+### super([type[, object-or-type]])
 
 `__mro__` 链，解决多继承中的 `diamond diagrams` 问题
 
 
-###class type(object)
-###class type(name, bases, dict)
+### class type(object)
+### class type(name, bases, dict)
 
 With one argument, return the type of an object. The return value is a type object and generally the same object as returned by `object.__class__`.
 
@@ -196,7 +196,7 @@ With three arguments, return a new type object. This is essentially a dynamic fo
 
 
 
-###vars([object])
+### vars([object])
 
 Return the `__dict__` attribute for a module, class, instance, or any other object with a `__dict__` attribute.
 
@@ -206,7 +206,7 @@ Without an argument, `vars()` acts like `locals()`. Note, the locals dictionary 
 
 
 
-###zip(*iterables)
+### zip(*iterables)
 
 Make an iterator that aggregates elements from each of the iterables.
 
@@ -229,14 +229,14 @@ The left-to-right evaluation order of the iterables is guaranteed. This makes po
 
 
     In [24]: s = [1,2,3,4]
-    
+
     In [25]: n = 2
-    
+
     In [26]: zip(*[iter(s)]*n)
     Out[26]: <zip at 0xb4f8e6ac>
-    
+
     In [27]: r = zip(*[iter(s)]*n)
-    
+
     In [28]: list(r)
     Out[28]: [(1, 2), (3, 4)]
 
@@ -255,5 +255,5 @@ The left-to-right evaluation order of the iterables is guaranteed. This makes po
     >>> x == list(x2) and y == list(y2)
     True
 
-###`__import__`(name, globals=None, locals=None, fromlist=(), level=0)
+### `__import__`(name, globals=None, locals=None, fromlist=(), level=0)
 用于 hook

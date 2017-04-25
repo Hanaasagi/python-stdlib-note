@@ -1,4 +1,4 @@
-#[6.7. readline — GNU readline interface](https://docs.python.org/3.5/library/readline.html)
+# [6.7. readline — GNU readline interface](https://docs.python.org/3.5/library/readline.html)
 
 
 通过这个模块来调用 GNU readline 接口可以实现以下要求  
@@ -8,7 +8,7 @@
 `...`
 
 
-###补全  
+### 补全  
 
 
 
@@ -60,7 +60,7 @@
             result = Command.exec_command(line)
             print(result)
 
-###历史命令
+### 历史命令
 
     import atexit
     import readline
@@ -79,4 +79,3 @@
         line = ''
         while line != 'exit':
             line = input('>>')
-

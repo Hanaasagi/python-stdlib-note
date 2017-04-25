@@ -1,4 +1,4 @@
-#[5. Built-in Exceptions](https://docs.python.org/3.5/library/exceptions.html)
+# [5. Built-in Exceptions](https://docs.python.org/3.5/library/exceptions.html)
 
 In Python, all exceptions must be instances of a class that derives from `BaseException`.
 
@@ -18,9 +18,9 @@ Python3.x 中的 traceback 信息会形成一条链
       File "tmp.py", line 2, in <module>
         1 / 0
     ZeroDivisionError: division by zero
-    
+
     During handling of the above exception, another exception occurred:
-    
+
     Traceback (most recent call last):
       File "tmp.py", line 4, in <module>
         raise ValueError
@@ -40,20 +40,20 @@ The expression following `from` must be an exception or `None`. **It will be set
        ...: except Exception as e:
        ...:     b = e
        ...:     
-    
+
     In [7]: b
     Out[7]: ZeroDivisionError()
-    
+
     In [8]: b.__cause__
     Out[8]: TypeError()
-    
+
     In [9]: b.__suppress_context__
     Out[9]: True
 
-##5.1. Base classes
+## 5.1. Base classes
 经常用来作为基类的几个异常  
 
-####exception BaseException
+#### exception BaseException
 **The base class for all built-in exceptions. It is not meant to be directly inherited by user-defined classes (for that, use Exception)**. If str() is called on an instance of this class, the representation of the argument(s) to the instance are returned, or the empty string when there were no arguments.
 
 args
@@ -71,85 +71,86 @@ This method sets `tb` as the new traceback for the exception and returns the exc
         raise OtherException(...).with_traceback(tb)
 
 
-####exception Exception
+#### exception Exception
 All built-in, non-system-exiting exceptions are derived from this class. **All user-defined exceptions should also be derived from this class**.
 
-####exception ArithmeticError
+#### exception ArithmeticError
 The base class for those built-in exceptions that are raised for various arithmetic errors: `OverflowError`, `ZeroDivisionError`, `FloatingPointError`.
 
-####exception BufferError
+#### exception BufferError
 Raised when a buffer related operation cannot be performed.
 
-####exception LookupError
+#### exception LookupError
 The base class for the exceptions that are raised when a key or index used on a mapping or sequence is invalid: `IndexError`, `KeyError`. This can be raised directly by codecs.lookup().
 
-##5.2. Concrete exceptions
+## 5.2. Concrete exceptions
 
 不在赘述 [Concrete exceptions](https://docs.python.org/3.5/library/exceptions.html#concrete-exceptions)
 
-##5.3. Warnings
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## 5.3. Warnings
+
+## 5.4. Exception hierarchy
+
+    BaseException
+     +-- SystemExit
+     +-- KeyboardInterrupt
+     +-- GeneratorExit
+     +-- Exception
+          +-- StopIteration
+          +-- StopAsyncIteration
+          +-- ArithmeticError
+          |    +-- FloatingPointError
+          |    +-- OverflowError
+          |    +-- ZeroDivisionError
+          +-- AssertionError
+          +-- AttributeError
+          +-- BufferError
+          +-- EOFError
+          +-- ImportError
+          +-- LookupError
+          |    +-- IndexError
+          |    +-- KeyError
+          +-- MemoryError
+          +-- NameError
+          |    +-- UnboundLocalError
+          +-- OSError
+          |    +-- BlockingIOError
+          |    +-- ChildProcessError
+          |    +-- ConnectionError
+          |    |    +-- BrokenPipeError
+          |    |    +-- ConnectionAbortedError
+          |    |    +-- ConnectionRefusedError
+          |    |    +-- ConnectionResetError
+          |    +-- FileExistsError
+          |    +-- FileNotFoundError
+          |    +-- InterruptedError
+          |    +-- IsADirectoryError
+          |    +-- NotADirectoryError
+          |    +-- PermissionError
+          |    +-- ProcessLookupError
+          |    +-- TimeoutError
+          +-- ReferenceError
+          +-- RuntimeError
+          |    +-- NotImplementedError
+          |    +-- RecursionError
+          +-- SyntaxError
+          |    +-- IndentationError
+          |         +-- TabError
+          +-- SystemError
+          +-- TypeError
+          +-- ValueError
+          |    +-- UnicodeError
+          |         +-- UnicodeDecodeError
+          |         +-- UnicodeEncodeError
+          |         +-- UnicodeTranslateError
+          +-- Warning
+               +-- DeprecationWarning
+               +-- PendingDeprecationWarning
+               +-- RuntimeWarning
+               +-- SyntaxWarning
+               +-- UserWarning
+               +-- FutureWarning
+               +-- ImportWarning
+               +-- UnicodeWarning
+               +-- BytesWarning
+               +-- ResourceWarning

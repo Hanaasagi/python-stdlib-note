@@ -1,6 +1,6 @@
-#[4. Built-in Types](https://docs.python.org/3.5/library/stdtypes.html)  
+# [4. Built-in Types](https://docs.python.org/3.5/library/stdtypes.html)  
 
-##4.1. Truth Value Testing  
+## 4.1. Truth Value Testing  
 Any object can be tested for truth value, for use in an **if** or **while** condition or as **operand of the Boolean operations** below. The following values are considered false:
 
     None
@@ -62,21 +62,21 @@ Operations and built-in functions that have a Boolean result always return 0 or 
     # `__bool__` called
     # <__main__.B object at 0xb70f3a6c>
     print(b or a)
-    
+
 从以上可以看出  
 1) 优先调用 `__bool__`  
 2) 执行 `== False` 时，不会调用，且返回值为 `False`  
 3) 布尔运算 `and`, `or` 时，返回的是一侧的操作数
 
 
-##4.2. Boolean Operations — and, or, not
+## 4.2. Boolean Operations — and, or, not
 `x or y`  相当于 `if x is false, then y, else x`  
 `x and y` 相当于 `if x is false, then x, else y`  
 `not`     相当于 `if x is false, then True, else False`
 
 `and` 和 `or` 具有短路特性  
 
-##4.3. Comparisons  
+## 4.3. Comparisons  
 
 Comparisons can be **chained** arbitrarily; for example, `x < y <= z` is equivalent to `x < y and y <= z`, except that y is **evaluated only once** (but in both cases z is not evaluated at all when x < y is found to be false).
 
@@ -84,12 +84,12 @@ Comparisons can be **chained** arbitrarily; for example, `x < y <= z` is equival
     In [79]: def y():
         ...:     print('eval y')
         ...:     return 10
-        ...: 
-    
+        ...:
+
     In [80]: 1 < y() < 20
     eval y
     Out[80]: True
-    
+
     In [81]: 3 < 1 < y()
     Out[81]: False
 
@@ -110,22 +110,22 @@ Instances of a class cannot be ordered with respect to other instances of the sa
         ...:     def __eq__(self, other):
         ...:         return self.num == other.num
         ...:     
-    
+
     In [87]: a = Num(10)
-    
+
     In [88]: b = Num(2)
-    
+
     In [89]: a > b
     Out[89]: True
-    
+
     In [90]: a < b
     Out[90]: False
-    
+
     In [91]: c = Num(2)
-    
+
     In [92]: a == c
     Out[92]: False
-    
+
     In [93]: b == c
     Out[93]: True
 
@@ -134,15 +134,15 @@ The behavior of the is and is not operators cannot be customized; also they can 
 Two more operations with the same syntactic priority, in and not in, are supported only by sequence types (below).
 
 
-##4.4. Numeric Types — int, float, complex
+## 4.4. Numeric Types — int, float, complex
 
-There are three distinct numeric types: integers, floating point numbers, and complex numbers. In addition, **Booleans are a subtype of integers**. Integers have unlimited precision. Floating point numbers are usually implemented using double in C; information about the precision and internal representation of floating point numbers for the machine on which your program is running is available in **`sys.float_info`**. 
+There are three distinct numeric types: integers, floating point numbers, and complex numbers. In addition, **Booleans are a subtype of integers**. Integers have unlimited precision. Floating point numbers are usually implemented using double in C; information about the precision and internal representation of floating point numbers for the machine on which your program is running is available in **`sys.float_info`**.
 
 **Python fully supports mixed arithmetic**: when a binary arithmetic operator has operands of different numeric types, the operand with the “narrower” type is widened to that of the other, where integer is narrower than floating point, which is narrower than complex. Comparisons between numbers of mixed type use the same rule. [2] The constructors int(), float(), and complex() can be used to produce numbers of a specific type.
-    
+
     In [105]: 1 == 1.0
     Out[105]: True
-    
+
     In [106]: [1, 2] == [1.0, 2.0]
     Out[106]: True
 
@@ -154,18 +154,18 @@ There are three distinct numeric types: integers, floating point numbers, and co
 
 `math.trunc()`  删除掉数字的小数部分和小数点，在参数是正数的情况下，`trunc()` 的执行效果等同于 `floor()`。而在参数是负数的情况下，`trunc()` 的执行效果等同于 `ceil()`
 
-###4.4.1. Bitwise Operations on Integer Types
-   
-   
-###4.4.2. Additional Methods on Integer Types
-        
+### 4.4.1. Bitwise Operations on Integer Types
+
+
+### 4.4.2. Additional Methods on Integer Types
+
 The int type implements the `numbers.Integral` abstract base class. In addition, it provides a few more methods:
 
-####`int.bit_length()`
+#### `int.bit_length()`
 Return the number of bits necessary to represent an integer in binary, excluding the sign and leading zeros:
 More precisely, if x is nonzero, then `x.bit_length()` is the unique positive integer k such that `2**(k-1) <= abs(x) < 2**k`. Equivalently, when `abs(x)` is small enough to have a correctly rounded logarithm, then `k = 1 + int(log(abs(x), 2))`. If x is zero, then `x.bit_length()` returns 0.
 
-####`int.to_bytes(length, byteorder, *, signed=False)`
+#### `int.to_bytes(length, byteorder, *, signed=False)`
 Return an array of bytes representing an integer.
 
 The integer is represented using length bytes. An OverflowError is raised if the integer is not representable with the given number of bytes.
@@ -178,15 +178,15 @@ The byteorder argument determines the byte order used to represent the integer. 
 
 The signed argument determines whether two’s complement is used to represent the integer. If signed is False and a negative integer is given, an OverflowError is raised. The default value for signed is False.
 
-####classmethod int.from_bytes(bytes, byteorder, *, signed=False)
+#### classmethod int.from_bytes(bytes, byteorder, *, signed=False)
 
 Return the integer represented by the given array of bytes.
 
     In [22]: a = 1024
-    
+
     In [23]: a.to_bytes(10, 'big')
     Out[23]: b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'
-    
+
     In [24]: int.from_bytes(a.to_bytes(10, 'big'), 'big')
     Out[24]: 1024
 
@@ -194,43 +194,43 @@ Return the integer represented by the given array of bytes.
 
     In [53]: int.from_bytes([192, 168, 1, 1], 'big')
     Out[53]: 3232235777
-    
+
     In [54]: s = bin(3232235777).lstrip('0b')
-    
+
     In [55]: s
     Out[55]: '11000000101010000000000100000001'
-    
+
     In [56]: l = re.findall(r'.{8}', s)
-    
+
     In [57]: l
     Out[57]: ['11000000', '10101000', '00000001', '00000001']
-    
+
     In [58]: from functools import partial
-    
+
     In [59]: int2 = partial(int, base=2)
-    
+
     In [60]: list(map(int2, l))
     Out[60]: [192, 168, 1, 1]
 
-###4.4.3. Additional Methods on Float  
+### 4.4.3. Additional Methods on Float  
 
 The float type implements the `numbers.Real` abstract base class. float also has the following additional methods.
 
-####float.as_integer_ratio()
+#### float.as_integer_ratio()
 Return a pair of integers whose ratio is exactly equal to the original float and with a positive denominator. Raises OverflowError on infinities and a ValueError on NaNs.
 
     In [68]: a, b = 3.14.as_integer_ratio()
-    
+
     In [69]: a / b
     Out[69]: 3.14
 
 **4.4.4. Hashing of numeric types 示例代码中有使用**
 
-####float.is_integer()
+#### float.is_integer()
 判断浮点数是否为整数  
 
-####float.hex()
-####classmethod float.fromhex(s)  
+#### float.hex()
+#### classmethod float.fromhex(s)  
 Since Python’s floats are stored internally as binary numbers, **converting a float to or from a decimal string usually involves a small rounding error. In contrast, hexadecimal strings allow exact representation and specification of floating-point numbers**. This can be useful when debugging, and in numerical work.
 A hexadecimal string takes the form:  
 
@@ -249,7 +249,7 @@ Applying the reverse conversion to 3740.0 gives a different hexadecimal string r
     >>> float.hex(3740.0)
     '0x1.d380000000000p+11'
 
-###4.4.4. Hashing of numeric types  
+### 4.4.4. Hashing of numeric types  
 
 For numbers `x` and `y`, possibly of different types, it’s a requirement that `hash(x) == hash(y)` whenever `x == y`. Python’s hash for numeric types is based on a single mathematical function that’s defined for any rational number, and hence applies to all instances of int and fractions.Fraction, and all finite instances of float and decimal.Decimal. Essentially, this function is given by reduction modulo P for a fixed prime P. The value of P is made available to Python as the modulus attribute of sys.hash_info.
 
@@ -266,7 +266,7 @@ Here are the rules in detail:
 To clarify the above rules, here’s some example Python code, equivalent to the built-in hash, for computing the hash of a rational number, `float`, or `complex`:
 
     import sys, math
-    
+
     def hash_fraction(m, n):
     """Compute the hash of a rational number m / n.
 
@@ -311,21 +311,21 @@ To clarify the above rules, here’s some example Python code, equivalent to the
     if hash_value == -1:
         hash_value = -2
     return hash_value
-    
-##4.5. Iterator Types
+
+## 4.5. Iterator Types
 Python supports a concept of iteration over containers. This is implemented using two distinct methods; these are used to allow user-defined classes to support iteration. Sequences, described below in more detail, always support the iteration methods.
 
 **One method needs to be defined for container objects to provide iteration support**:
 
-####`container.__iter__()`
+#### `container.__iter__()`
 **Return an iterator object**. The object is required to support the iterator protocol described below. If a container supports different types of iteration, additional methods can be provided to specifically request iterators for those iteration types. (An example of an object supporting multiple forms of iteration would be a tree structure which supports both breadth-first and depth-first traversal.) This method corresponds to the `tp_iter` slot of the type structure for Python objects in the Python/C API.
 
 **The iterator objects themselves are required to support the following two methods, which together form the iterator protocol**:
 
-####`iterator.__iter__()`
+#### `iterator.__iter__()`
 **Return the iterator object itself**. **This is required to allow both containers and iterators to be used with the `for` and `in` statements**. This method corresponds to the `tp_iter` slot of the type structure for Python objects in the Python/C API.
 
-####`iterator.__next__()`
+#### `iterator.__next__()`
 Return the next item from the container. If there are no further items, raise the `StopIteration` exception. This method corresponds to the `tp_iternext` slot of the type structure for Python objects in the Python/C API.
 
 Python defines several iterator objects to support iteration over general and specific sequence types, dictionaries, and other more specialized forms. **The specific types are not important beyond their implementation of the iterator protocol**.
@@ -347,9 +347,9 @@ Once an iterator’s `__next__()` method raises `StopIteration`, it must continu
         ...:         return num
         ...:         
         ...:     
-    
+
     In [72]: iterator = Iterator(10)
-    
+
     In [73]: for i in iterator:
         ...:     print(i)
         ...:     
@@ -358,13 +358,13 @@ Once an iterator’s `__next__()` method raises `StopIteration`, it must continu
     <ipython-input-73-19e5eb572c56> in <module>()
     ----> 1 for i in iterator:
           2     print(i)
-          3 
-    
+          3
+
     TypeError: 'Iterator' object is not iterable
-    
+
     In [74]: next(iterator)
     Out[74]: 0
-    
+
     In [75]: next(iterator)
     Out[75]: 1
 
@@ -382,9 +382,9 @@ Once an iterator’s `__next__()` method raises `StopIteration`, it must continu
         ...:         return num
         ...:         
         ...:     
-    
+
     In [77]: iterator = Iterator(10)
-    
+
     In [78]: for i in iterator:
         ...:     print(i)
         ...:     
@@ -403,10 +403,10 @@ Once an iterator’s `__next__()` method raises `StopIteration`, it must continu
             call_block(res)
         except StopIteration:
             break
-            
+
 另外上面实现的那个迭代器是无法多次进行迭代的，因为没有重置状态  
 
-###4.5.1. Generator Types  
+### 4.5.1. Generator Types  
 Python’s generators provide a convenient way to implement the iterator protocol. If a container object’s `__iter__()` method is implemented as a generator, it will automatically return an iterator object (technically, a generator object) supplying the `__iter__()` and `__next__()` methods. More information about generators can be found in the documentation for the yield expression.
 
     In [5]: class A(object):
@@ -416,28 +416,28 @@ Python’s generators provide a convenient way to implement the iterator protoco
        ...:                 yield i
        ...:         return func()
        ...:     
-    
+
     In [6]: a = A()
-    
+
     In [7]: for i in a:
        ...:     print(i)
        ...:     
     0
     1
     ...
-    
-##4.6. Sequence Types — list, tuple, range
+
+## 4.6. Sequence Types — list, tuple, range
 There are three basic sequence types: lists, tuples, and range objects. Additional sequence types tailored for processing of binary data and text strings are described in dedicated sections.
 
-###4.6.1. Common Sequence Operations
-####s.index(x[, i[, j]])
+### 4.6.1. Common Sequence Operations
+#### s.index(x[, i[, j]])
 index of the first occurrence of `x` in `s` (at or after index `i` and before index `j`)
 
 `index` raises `ValueError` when x is not found in s. When supported, the additional arguments to the index method allow efficient searching of subsections of the sequence. Passing the extra arguments is roughly equivalent to using s[i:j].index(x), only without copying any data and with the returned index being relative to the start of the sequence rather than the start of the slice.
 
-####s.count(x)  
+#### s.count(x)  
 total number of occurrences of x in s
-####Notes
+#### Notes
 1) Values of n less than `0` are treated as `0` (which yields an empty sequence of the same type as s). Note that items in the sequence s are not copied; they are referenced multiple times. This often haunts new Python programmers; consider:
 
     >>> lists = [[]] * 3
@@ -465,12 +465,12 @@ What has happened is that `[[]]` is a one-element list containing an empty list,
 - if concatenating `tuple` objects, extend a `list` instead
 - for other types, investigate the relevant class documentation
 
-###4.6.2. Immutable Sequence Types
+### 4.6.2. Immutable Sequence Types
 The only operation that immutable sequence types generally implement that is not also implemented by mutable sequence types is support for the `hash()` built-in.
 This support allows immutable sequences, such as `tuple` instances, to be used as `dict` keys and stored in `set` and `frozenset` instances.
 Attempting to hash an immutable sequence that contains unhashable values will result in `TypeError`.  
 
-###4.6.3. Mutable Sequence Types
+### 4.6.3. Mutable Sequence Types
 The operations in the following table are defined on mutable sequence types. The `collections.abc.MutableSequence` ABC is provided to make it easier to correctly implement these operations on custom sequence types.
 In the table s is an instance of a mutable sequence type, t is any **iterable object** and x is an arbitrary object that meets any type and value restrictions imposed by s (for example, `bytearray` only accepts integers that meet the value restriction `0 <= x <= 255`).
 
@@ -480,51 +480,51 @@ In the table s is an instance of a mutable sequence type, t is any **iterable ob
         ...:     for i in range(5):
         ...:         yield i
         ...:         
-    
+
     In [28]: a = []
-    
+
     In [29]: a.extend(b())
-    
+
     In [30]: a
     Out[30]: [0, 1, 2, 3, 4]
 
 
-####s[i:j:k] = t
+#### s[i:j:k] = t
 the elements of s[i:j:k] are replaced by those of t  
 
     In [1]: a = [1,2,3,4,5,6,7,8]
-    
+
     In [2]: a[0:8:2] = [2,4,6,8]
-    
+
     In [3]: a
     Out[3]: [2, 2, 4, 4, 6, 6, 8, 8]
 
-####s.append(x)
+#### s.append(x)
 appends x to the end of the sequence (**same as `s[len(s):len(s)] = [x]`**)
 
 类似的，`s.insert(i, x)` 和 `s[i:i] = x` 等价
 
-####s.extend(t)
+#### s.extend(t)
 extends s with the contents of t (**for the most part** the same as `s[len(s):len(s)] = t`)
 大部分情况满足
 
-####s *= n
+#### s *= n
 updates s with its contents repeated n times. The value n is an integer, or an object implementing `__index__()`. Zero and negative values of n clear the sequence.  
 
     In [31]: class A(object):
         ...:     def __index__(self):
         ...:         return 2
         ...:     
-    
+
     In [32]: b = [1,2] * A()
-    
+
     In [33]: b
     Out[33]: [1, 2, 1, 2]
 
 
-###4.6.4. Lists
+### 4.6.4. Lists
 Lists are mutable sequences, typically used to store collections of homogeneous items (where the precise degree of similarity will vary by application).Lists implement all of the common and mutable sequence operations. Lists also provide the following additional method:
-####sort(*, key=None, reverse=None)
+#### sort(*, key=None, reverse=None)
 This method sorts the list in place, using only `<` comparisons between items. Exceptions are not suppressed - if any comparison operations fail, the entire sort operation will fail (and **the list will likely be left in a partially modified state**).
 key specifies a function of one argument that is used to extract a comparison key from each list element (for example, key=`str.lower`). The key corresponding to each item in the list is calculated once and then used for the entire sorting process. The default value of `None` means that list items are sorted directly without calculating a separate key value.
 
@@ -548,13 +548,13 @@ To remind users that it operates by side effect, it does not return the sorted s
 
 **The `sort()` method is guaranteed to be stable. A sort is stable if it guarantees not to change the relative order of elements that compare equal** — this is helpful for sorting in multiple passes (for example, sort by department, then by salary grade).
 
-###4.6.5. Tuples
+### 4.6.5. Tuples
 Tuples are immutable sequences, typically used to store collections of heterogeneous data (such as the 2-tuples produced by the `enumerate()` built-in). Tuples are also used for cases where an immutable sequence of homogeneous data is needed (such as allowing storage in a `set` or `dict` instance).  
 
 对于创建一个元组不仅有 `(a,)` 的形式，还有 `a, `  
 
     In [16]: a = 1,
-    
+
     In [17]: a.__class__
     Out[17]: tuple
 
@@ -566,11 +566,11 @@ Tuples are immutable sequences, typically used to store collections of heterogen
 
 For heterogeneous collections of data where access by name is clearer than access by index, `collections.namedtuple()` may be a more appropriate choice than a simple tuple object.
 
-###4.6.6. Ranges
+### 4.6.6. Ranges
 The `range` type represents an immutable sequence of numbers and is commonly used for looping a specific number of times in `for` loops.  
 
-####class range(stop)
-####class range(start, stop[, step])
+#### class range(stop)
+#### class range(start, stop[, step])
 
 The arguments to the range constructor must be integers (either built-in `int` or any object that implements the `__index__` special method). If the step argument is omitted, it defaults to `1`. If the start argument is omitted, it defaults to `0`. If step is zero, `ValueError` is raised.
 
@@ -599,7 +599,7 @@ The arguments to the range constructor must be integers (either built-in `int` o
 
 Testing range objects for equality with `==` and `!=` compares them as sequences. That is, two range objects are considered equal if they represent the same sequence of values. (**Note that two range objects that compare equal might have different `start`, `stop` and `step` attributes, for example `range(0) == range(2, 1, 3)` or `range(0, 3, 2) == range(0, 4, 2)`.**)
 
-##4.7. Text Sequence Type — str
+## 4.7. Text Sequence Type — str
 Textual data in Python is handled with `str` objects, or strings. Strings are immutable `sequences` of Unicode code points.
 
 **String literals that are part of a single expression and have only whitespace between them will be implicitly converted to a single string literal**. That is, `("spam " "eggs")` == `"spam eggs"`.
@@ -608,7 +608,7 @@ Textual data in Python is handled with `str` objects, or strings. Strings are im
 
     In [7]: s = ('hello '
        ...: 'world')
-    
+
     In [8]: s = 'hello \
        ...: world'
 
@@ -616,40 +616,40 @@ There is also no mutable string type, but `str.join()` or `io.StringIO` can be u
 
 Changed in version 3.3: For backwards compatibility with the Python 2 series, the `u` prefix is once again permitted on string literals. It has no effect on the meaning of string literals and cannot be combined with the `r` prefix.
 
-####class str(object='')
-####class str(object=b'', encoding='utf-8', errors='strict')
+#### class str(object='')
+#### class str(object=b'', encoding='utf-8', errors='strict')
 Return a `string` version of object.
 If neither encoding nor errors is given, `str(object)` returns `object.__str__()`, which is the “informal” or nicely printable string representation of object. For string objects, this is the string itself. **If object does not have a `__str__()` method, then `str()` falls back to returning `repr(object)`**.
 
-If at least one of encoding or errors is given, object should be a `bytes-like object` (e.g. `bytes` or `bytearray`). In this case, if object is a bytes (or bytearray) object, then str(bytes, encoding, errors) is equivalent to bytes.decode(encoding, errors). 
+If at least one of encoding or errors is given, object should be a `bytes-like object` (e.g. `bytes` or `bytearray`). In this case, if object is a bytes (or bytearray) object, then str(bytes, encoding, errors) is equivalent to bytes.decode(encoding, errors).
 
-###4.7.1. String Methods
-####str.center(width[, fillchar])
+### 4.7.1. String Methods
+#### str.center(width[, fillchar])
 Return centered in a string of length width. Padding is done using the specified fillchar (default is an ASCII space). The original string is returned if width is less than or equal to len(s).
 
 这个 `width` 不是想在两侧添加的字符长度，而是返回的总长度  
 `str.ljust(width[, fillchar])`, `str.rjust(width[, fillchar])` 也是这样
 
-####str.count(sub[, start[, end]])
+#### str.count(sub[, start[, end]])
 计算区间中指定字符出现次数  
 
-####str.endswith(suffix[, start[, end]])
+#### str.endswith(suffix[, start[, end]])
 Return `True` if the string ends with the specified suffix, otherwise return `False`. suffix can also be a tuple of suffixes to look for. With optional start, test beginning at that position. With optional end, stop comparing at that position.
 
 `str.endswith` 和 `str.startswith` 都可以指定区间，比如我们可以匹配时忽略标点  
 
     In [34]: s = 'balabala, desu!'
-    
+
     In [35]: s.endswith('desu', 0, -1)
     Out[35]: True
 
-####str.expandtabs(tabsize=8)
+#### str.expandtabs(tabsize=8)
 Return a copy of the string where all tab characters are replaced by one or more spaces, depending on the current column and the given tab size. Tab positions occur every tabsize characters (default is 8, giving tab positions at columns 0, 8, 16 and so on). **To expand the string, the current column is set to zero and the string is examined character by character. If the character is a tab (`\t`), one or more space characters are inserted in the result until the current column is equal to the next tab position. (The tab character itself is not copied.) If the character is a newline (`\n`) or return (`\r`), it is copied and the current column is reset to zero.** Any other character is copied unchanged and the current column is incremented by one regardless of how the character is represented when printed.
 
     In [2]: '0\t01\t012\t'.expandtabs(4)
     Out[2]: '0   01  012 '
 
-####str.find(sub[, start[, end]])
+#### str.find(sub[, start[, end]])
 Return the lowest index in the string where substring sub is found within the slice `s[start:end]`. Optional arguments start and end are interpreted as in slice notation. Return `-1` if sub is not found.
 
 Note:The `find()` method should be used only if you need to know the position of sub. To check if sub is a substring or not, use the `in` operator:
@@ -657,12 +657,12 @@ Note:The `find()` method should be used only if you need to know the position of
 对应存在 `str.rfind`  
 
 
-####str.index(sub[, start[, end]])
+#### str.index(sub[, start[, end]])
 Like `find()`, but raise `ValueError` when the substring is not found.
 
 对应存在 `str.rindex`
 
-####str.format_map(mapping)
+#### str.format_map(mapping)
 Similar to `str.format(**mapping)`, except that `mapping` is used directly and not copied to a dict. This is useful if for example `mapping` is a dict subclass:
 
 
@@ -673,41 +673,41 @@ Similar to `str.format(**mapping)`, except that `mapping` is used directly and n
     >>> '{name} was born in {country}'.format_map(Default(name='Guido'))
     'Guido was born in country'
 
-####str.isdecimal() 
-####str.isdigit()
-####str.isnumeric()
+#### str.isdecimal()
+#### str.isdigit()
+#### str.isnumeric()
 `str.isdecimal()` (Only Decimal Numbers)
 `str.isdigit()`   (Decimals, Subscripts, Superscripts)
 `str.isnumeric()` (Digits, Vulgar Fractions, Subscripts, Superscripts, Roman Numerals, Currency Numerators)
 
     In [66]: '²'.isdecimal()
     Out[66]: False
-    
+
     In [67]: '²'.isdigit()
     Out[67]: True
-    
+
     In [68]: '²'.isnumeric()
     Out[68]: True
-    
+
     In [69]: 'Ⅵ'.isdecimal()
     Out[69]: False
-    
+
     In [70]: 'Ⅵ'.isdigit()
     Out[70]: False
-    
+
     In [71]: 'Ⅵ'.isnumeric()
     Out[71]: True
 
-####str.isidentifier()
+#### str.isidentifier()
 Return true if the string is a valid identifier according to the language definition, section `Identifiers and keywords`.
 Use `keyword.iskeyword()` to test for reserved identifiers such as `def` and `class`.
 
 
-####str.isprintable()
+#### str.isprintable()
 Return true if all characters in the string are printable or the string is empty, false otherwise. Nonprintable characters are those characters defined in the Unicode character database as “Other” or “Separator”, excepting the ASCII space (0x20) which is considered printable. (Note that printable characters in this context are those which should not be escaped when `repr()` is invoked on a string. It has no bearing on the handling of strings written to `sys.stdout` or `sys.stderr`.)
 
 
-####str.lstrip([chars])
+#### str.lstrip([chars])
 Return a copy of the string with leading characters removed. The chars argument is a string **specifying the set of characters to be removed**. If omitted or `None`, the chars argument defaults to removing whitespace. **The chars argument is not a prefix; rather, all combinations of its values are stripped**:
 
 
@@ -719,7 +719,7 @@ Return a copy of the string with leading characters removed. The chars argument 
 `rstrip`, `strip` 也是这样的
 
 
-####static str.maketrans(x[, y[, z]])
+#### static str.maketrans(x[, y[, z]])
 This static method returns a translation table usable for `str.translate()`.
 If there is only one argument, it must be a dictionary mapping Unicode ordinals (integers) or characters (strings of length 1) to Unicode ordinals, strings (of arbitrary lengths) or `None`. Character keys will then be converted to ordinals.
 
@@ -728,25 +728,25 @@ If there are two arguments, they must be strings of equal length, and in the res
     In [104]: str.maketrans('abc', 'ABC','a')
     Out[104]: {97: None, 98: 66, 99: 67}
 
-####str.partition(sep)
+#### str.partition(sep)
 Split the string at the **first** occurrence of sep, and return a 3-tuple containing the part before the separator, the separator itself, and the part after the separator. If the separator is not found, return a 3-tuple containing the string itself, followed by two empty strings.
 
 按指定字符将字符串分割为三部分  
 
 对应存在 `str.rpartition(sep)`
 
-####str.replace(old, new[, count])
+#### str.replace(old, new[, count])
 Return a copy of the string with all occurrences of substring old replaced by new. If the optional argument count is given, only the first count occurrences are replaced.
 
 可以指定替换的次数
 
-####str.split(sep=None, maxsplit=-1)
+#### str.split(sep=None, maxsplit=-1)
 Return a list of the words in the string, using sep as the delimiter string. **If maxsplit is given, at most maxsplit splits are done (thus, the list will have at most `maxsplit+1` elements)**. If maxsplit is not specified or -1, then there is no limit on the number of splits (all possible splits are made).If sep is given, consecutive delimiters are not grouped together and are deemed to delimit empty strings (for example, `'1,,2'.split(',')` returns `['1', '', '2'])`.
-If sep is not specified or is `None`, a **different splitting algorithm** is applied: runs of consecutive whitespace are regarded as a single separator, and the result will contain no empty strings at the start or end if the string has leading or trailing whitespace(for example, `'  a b   c'.split()` returns `['a', 'b', 'c']`). 
+If sep is not specified or is `None`, a **different splitting algorithm** is applied: runs of consecutive whitespace are regarded as a single separator, and the result will contain no empty strings at the start or end if the string has leading or trailing whitespace(for example, `'  a b   c'.split()` returns `['a', 'b', 'c']`).
 
 对应存在 `str.rsplit(sep=None, maxsplit=-1)`
 
-####str.splitlines([keepends])
+#### str.splitlines([keepends])
 Return a list of the lines in the string, breaking at line boundaries. Line breaks are not included in the resulting list unless keepends is given and true.
 
 
@@ -786,14 +786,14 @@ For comparison, split('\n') gives:
     ['Two lines', '']
 
 
-####str.swapcase()
+#### str.swapcase()
 Return a copy of the string with uppercase characters converted to lowercase and vice versa. **Note that it is not necessarily true that     `s.swapcase().swapcase() == s`**.
 
     In [8]: s = 'ß'
-    
+
     In [9]: s.swapcase()
     Out[9]: 'SS'
-    
+
     In [10]: s.swapcase().swapcase()
     Out[10]: 'ss'
 
@@ -801,7 +801,7 @@ the German lowercase letter `'ß'` is equivalent to `"ss"`
 
 和这个有点关系 [`str.casefold()`](https://docs.python.org/3.5/library/stdtypes.html#str.casefold)  
 
-####str.title()
+#### str.title()
 Return a titlecased version of the string where words start with an uppercase character and the remaining characters are lowercase.
 
 For example:
@@ -828,50 +828,50 @@ A workaround for apostrophes(`'`) can be constructed using regular expressions:
     >>> titlecase("they're bill's friends.")
     "They're Bill's Friends."
 
-####str.translate(table)
+#### str.translate(table)
 Return a copy of the string in which each character has been mapped through the given translation table. The table must be an object that implements indexing via `__getitem__()`, typically a `mapping` or `sequence`. When indexed by a Unicode ordinal (an integer), the table object can do any of the following: return a Unicode ordinal or a string, to map the character to one or more other characters; return `None`, to delete the character from the return string; or raise a `LookupError` exception, to map the character to itself.
 
 You can use `str.maketrans()` to create a translation map from character-to-character mappings in different formats.
 
     In [22]: m = str.maketrans('123456789', 'ⅠⅡⅢⅣⅤⅥⅦⅧⅨ')
-    
+
     In [23]: '1 2 3 4 5'.translate(m)
     Out[23]: 'Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ'
 
-####str.upper()
+#### str.upper()
 **Note that `str.upper().isupper()` might be `False` if s contains uncased characters or if the Unicode category of the resulting character(s) is not “Lu” (Letter, uppercase), but e.g. “Lt” (Letter, titlecase).**
 
 
     >>> '1'.upper().isupper()
     False
-    
-####str.zfill(width)
+
+#### str.zfill(width)
 Return a copy of the string left filled with ASCII `'0'` digits to make a string of length width. A leading sign prefix (`'+'`/`'-'`) is handled by inserting the padding after the sign character rather than before. The original string is returned if width is less than or equal to `len(s)`.
 
     >>> "42".zfill(5)
     '00042'
     >>> "-42".zfill(5)
     '-0042'
-    
-###4.7.2. printf-style String Formatting
+
+### 4.7.2. printf-style String Formatting
 String objects have one unique built-in operation: the `%` operator (modulo). This is also known as the string formatting or interpolation operator. Given `format % values` (where format is a string), `%` conversion specifications in format are replaced with zero or more elements of values. The effect is similar to using the `sprintf()` in the C language.
 
 Note:The formatting operations described here exhibit a variety of quirks that lead to a number of common errors (such as failing to display tuples and dictionaries correctly). **Using the newer str.format() interface helps avoid these errors, and also provides a generally more powerful, flexible and extensible approach to formatting text.**
 
 具体使用见 [printf-style String Formatting](https://docs.python.org/3.5/library/stdtypes.html#printf-style-string-formatting)
 
-##4.8. Binary Sequence Types — bytes, bytearray, memoryview
+## 4.8. Binary Sequence Types — bytes, bytearray, memoryview
 The core built-in types for manipulating binary data are `bytes` and `bytearray`. They are supported by `memoryview` which uses the `buffer protocol` to access the memory of other binary objects without needing to make a copy.
 
-###4.8.1. Bytes
+### 4.8.1. Bytes
 Bytes objects are immutable sequences of single bytes. Since many major binary protocols are based on the ASCII text encoding, bytes objects offer several methods that are only valid when working with ASCII compatible data and are closely related to string objects in a variety of other ways.
 Only ASCII characters are permitted in bytes literals (regardless of the declared source code encoding). Any binary values over 127 must be entered into bytes literals using the appropriate escape sequence.  
-As with string literals, bytes literals may also use a `r` prefix to disable processing of escape sequences. 
+As with string literals, bytes literals may also use a `r` prefix to disable processing of escape sequences.
 
-####classmethod bytes.fromhex(string)
+#### classmethod bytes.fromhex(string)
 This `bytes` class method returns a bytes object, decoding the given string object. The string must contain two hexadecimal digits per byte, with ASCII spaces being ignored.
 
-####bytes.hex()
+#### bytes.hex()
 A reverse conversion function exists to transform a bytes object into its hexadecimal representation.
 
 
@@ -880,19 +880,19 @@ A reverse conversion function exists to transform a bytes object into its hexade
 
     In [9]: bytes([46, 46, 46])
     Out[9]: b'...'
-    
+
     In [10]: list(b'...')
     Out[10]: [46, 46, 46]
 
 
 
-**Note:For Python 2.x users: In the Python 2.x series, a variety of implicit conversions between 8-bit strings (the closest thing 2.x offers to a built-in binary data type) and Unicode strings were permitted. This was a backwards compatibility workaround to account for the fact that Python originally only supported 8-bit text, and Unicode text was a later addition. In Python 3.x, those implicit conversions are gone - conversions between 8-bit binary data and Unicode text must be explicit, and bytes and string objects will always compare unequal.** 
+**Note:For Python 2.x users: In the Python 2.x series, a variety of implicit conversions between 8-bit strings (the closest thing 2.x offers to a built-in binary data type) and Unicode strings were permitted. This was a backwards compatibility workaround to account for the fact that Python originally only supported 8-bit text, and Unicode text was a later addition. In Python 3.x, those implicit conversions are gone - conversions between 8-bit binary data and Unicode text must be explicit, and bytes and string objects will always compare unequal.**
 
 Python3.x 不会隐式转换 `8-bit binary data` 和 `Unicode text`
 避免的 Python2.x 中的编码问题
 
 
-###4.8.2. Bytearray Objects
+### 4.8.2. Bytearray Objects
 `bytearray` objects are a **mutable** counterpart to `bytes` objects.
 
 `bytes` 不可变类型  
@@ -900,22 +900,22 @@ Python3.x 不会隐式转换 `8-bit binary data` 和 `Unicode text`
 
 The representation of bytearray objects uses the bytes literal format `(bytearray(b'...'))` since it is often more useful than e.g. `bytearray([46, 46, 46])`. You can always convert a bytearray object into a list of integers using `list(b)`.
 
-####classmethod bytearray.fromhex(string)
+#### classmethod bytearray.fromhex(string)
 This `bytearray` class method returns bytearray object, decoding the given string object. The string must contain two hexadecimal digits per byte, with ASCII spaces being ignored.
 
-####bytearray.hex()
+#### bytearray.hex()
 A reverse conversion function exists to transform a bytearray object into its hexadecimal representation.
 
-###4.8.3. Bytes and Bytearray Operations
+### 4.8.3. Bytes and Bytearray Operations
 Both bytes and bytearray objects support the common sequence operations. They interoperate not just with operands of the same type, but with any `bytes-like object`. Due to this flexibility, they can be freely mixed in operations without causing errors. However, **the return type of the result may depend on the order of operands**.
 
     In [14]: (bytes(0) + bytearray(0)).__class__
     Out[14]: bytes
-    
+
     In [15]: (bytearray(0) + bytes(0)).__class__
     Out[15]: bytearray
 
-`bytes` 和 `bytearray` 的方法和 `str` 的差不多，不过参数需要为 `bytes-like object`(An object that supports the Buffer Protocol and can export a C-contiguous buffer. This includes all `bytes`, `bytearray`, and `array.array` objects, as well as many common `memoryview` objects) 
+`bytes` 和 `bytearray` 的方法和 `str` 的差不多，不过参数需要为 `bytes-like object`(An object that supports the Buffer Protocol and can export a C-contiguous buffer. This includes all `bytes`, `bytearray`, and `array.array` objects, as well as many common `memoryview` objects)
 
 
 Some bytes and bytearray operations assume the use of ASCII compatible binary formats, and hence should be avoided when working with arbitrary binary data. These restrictions are covered below.
@@ -925,17 +925,17 @@ Some bytes and bytearray operations assume the use of ASCII compatible binary fo
 The following methods on bytes and bytearray objects can be used with arbitrary binary data.
 
 
-####bytes.count(sub[, start[, end]])
-####bytearray.count(sub[, start[, end]])
+#### bytes.count(sub[, start[, end]])
+#### bytearray.count(sub[, start[, end]])
 
-####bytes.decode(encoding="utf-8", errors="strict")
-####bytearray.decode(encoding="utf-8", errors="strict")
+#### bytes.decode(encoding="utf-8", errors="strict")
+#### bytearray.decode(encoding="utf-8", errors="strict")
 
-####bytes.endswith(suffix[, start[, end]])
-####bytearray.endswith(suffix[, start[, end]])
+#### bytes.endswith(suffix[, start[, end]])
+#### bytearray.endswith(suffix[, start[, end]])
 
-####bytes.find(sub[, start[, end]])
-####bytearray.find(sub[, start[, end]])
+#### bytes.find(sub[, start[, end]])
+#### bytearray.find(sub[, start[, end]])
 
     In [29]: bytes('你好世界', encoding='utf-8').find(bytes('好', encoding='utf-8'))
     Out[29]: 3
@@ -944,103 +944,103 @@ The following methods on bytes and bytearray objects can be used with arbitrary 
 
 **返回的字节中的索引**
 
-####bytes.index(sub[, start[, end]])
-####bytearray.index(sub[, start[, end]])
+#### bytes.index(sub[, start[, end]])
+#### bytearray.index(sub[, start[, end]])
 
-####bytes.join(iterable)
-####bytearray.join(iterable)
-Return a bytes or bytearray object which is the concatenation of the binary data sequences in the `iterable` iterable. A `TypeError` will be raised if there are any values in iterable that are not `bytes-like objects`, including str objects. 
+#### bytes.join(iterable)
+#### bytearray.join(iterable)
+Return a bytes or bytearray object which is the concatenation of the binary data sequences in the `iterable` iterable. A `TypeError` will be raised if there are any values in iterable that are not `bytes-like objects`, including str objects.
 
-####static bytes.maketrans(from, to)
-####static bytearray.maketrans(from, to)
+#### static bytes.maketrans(from, to)
+#### static bytearray.maketrans(from, to)
 
-####bytes.partition(sep)
-####bytearray.partition(sep)
+#### bytes.partition(sep)
+#### bytearray.partition(sep)
 
-####bytes.replace(old, new[, count])
-####bytearray.replace(old, new[, count])
+#### bytes.replace(old, new[, count])
+#### bytearray.replace(old, new[, count])
 
-####bytes.rfind(sub[, start[, end]])
-####bytearray.rfind(sub[, start[, end]])
+#### bytes.rfind(sub[, start[, end]])
+#### bytearray.rfind(sub[, start[, end]])
 
-####bytes.rindex(sub[, start[, end]])
-####bytearray.rindex(sub[, start[, end]])
+#### bytes.rindex(sub[, start[, end]])
+#### bytearray.rindex(sub[, start[, end]])
 
-####bytes.rpartition(sep)
-####bytearray.rpartition(sep)
+#### bytes.rpartition(sep)
+#### bytearray.rpartition(sep)
 
-####bytes.startswith(prefix[, start[, end]])
-####bytearray.startswith(prefix[, start[, end]])
+#### bytes.startswith(prefix[, start[, end]])
+#### bytearray.startswith(prefix[, start[, end]])
 
-####bytes.translate(table[, delete])
-####bytearray.translate(table[, delete])
+#### bytes.translate(table[, delete])
+#### bytearray.translate(table[, delete])
 
 这个和 [`str.translate(table)`](https://docs.python.org/3.5/library/stdtypes.html#str.translate)用法不相同
 
-The following methods on bytes and bytearray objects have default behaviours that assume the use of ASCII compatible binary formats, but can still be used with arbitrary binary data by passing appropriate arguments. 
+The following methods on bytes and bytearray objects have default behaviours that assume the use of ASCII compatible binary formats, but can still be used with arbitrary binary data by passing appropriate arguments.
 
-####bytes.center(width[, fillbyte])
-####bytearray.center(width[, fillbyte])
+#### bytes.center(width[, fillbyte])
+#### bytearray.center(width[, fillbyte])
 
-####bytes.ljust(width[, fillbyte])
-####bytearray.ljust(width[, fillbyte])
+#### bytes.ljust(width[, fillbyte])
+#### bytearray.ljust(width[, fillbyte])
 
-####bytes.lstrip([chars])
-####bytearray.lstrip([chars])
+#### bytes.lstrip([chars])
+#### bytearray.lstrip([chars])
 
-####bytes.rsplit(sep=None, maxsplit=-1)
-####bytearray.rsplit(sep=None, maxsplit=-1)
+#### bytes.rsplit(sep=None, maxsplit=-1)
+#### bytearray.rsplit(sep=None, maxsplit=-1)
 
-####bytes.rstrip([chars])
-####bytearray.rstrip([chars])
+#### bytes.rstrip([chars])
+#### bytearray.rstrip([chars])
 
-####bytes.split(sep=None, maxsplit=-1)
-####bytearray.split(sep=None, maxsplit=-1)
+#### bytes.split(sep=None, maxsplit=-1)
+#### bytearray.split(sep=None, maxsplit=-1)
 
-####bytes.strip([chars])
-####bytearray.strip([chars])
+#### bytes.strip([chars])
+#### bytearray.strip([chars])
 
-The following methods on bytes and bytearray objects assume the use of ASCII compatible binary formats and **should not be applied to arbitrary binary data.** 
+The following methods on bytes and bytearray objects assume the use of ASCII compatible binary formats and **should not be applied to arbitrary binary data.**
 
-####bytes.capitalize()
-####bytearray.capitalize()
+#### bytes.capitalize()
+#### bytearray.capitalize()
 Return a copy of the sequence with each byte interpreted as an ASCII character, and the first byte capitalized and the rest lowercased. **Non-ASCII byte values are passed through unchanged**.
 
-####bytes.isalpha()
-####bytearray.isalpha()
+#### bytes.isalpha()
+#### bytearray.isalpha()
 
-####bytes.isdigit()
-####bytearray.isdigit()
+#### bytes.isdigit()
+#### bytearray.isdigit()
 
-####bytes.isupper()
-####bytearray.isupper()
+#### bytes.isupper()
+#### bytearray.isupper()
 
-####bytes.lower()
-####bytearray.lower()
+#### bytes.lower()
+#### bytearray.lower()
 
-####bytes.splitlines(keepends=False)
-####bytearray.splitlines(keepends=False)
+#### bytes.splitlines(keepends=False)
+#### bytearray.splitlines(keepends=False)
 
-####bytes.swapcase()
-####bytearray.swapcase()
+#### bytes.swapcase()
+#### bytearray.swapcase()
 Unlike `str.swapcase()`, **it is always the case that `bin.swapcase().swapcase() == bin` for the binary versions**. Case conversions are symmetrical in ASCII, even though that is not generally true for arbitrary Unicode code points.
 
-####bytes.title()
-####bytearray.title()
+#### bytes.title()
+#### bytearray.title()
 
-####bytes.upper()
-####bytearray.upper()
+#### bytes.upper()
+#### bytearray.upper()
 
-####bytes.zfill(width)
-####bytearray.zfill(width)
+#### bytes.zfill(width)
+#### bytearray.zfill(width)
 
-###4.8.4. printf-style Bytes Formatting
+### 4.8.4. printf-style Bytes Formatting
 [printf-style Bytes Formatting](https://docs.python.org/3.5/library/stdtypes.html#printf-style-bytes-formatting)
 
-###4.8.5. Memory Views
+### 4.8.5. Memory Views
 `memoryview` objects allow Python code to access the internal data of an object that supports the `buffer protocol` without copying.
 
-####class memoryview(obj)
+#### class memoryview(obj)
 Create a `memoryview` that references obj. obj must support the buffer protocol. Built-in objects that support the buffer protocol include `bytes` and `bytearray`.
 
 A `memoryview` has the notion of an element, which is the atomic memory unit handled by the originating object obj. For many simple types such as `bytes` and `bytearray`, an element is a single byte, but other types such as `array.array` may have bigger elements.
@@ -1107,7 +1107,7 @@ One-dimensional memoryviews of hashable (read-only) types with formats `‘B’`
 
 `memoryview` has several methods:
 
-####`__eq__(exporter)`
+#### `__eq__(exporter)`
 A memoryview and a `PEP 3118` exporter are equal if their **shapes are equivalent** and if **all corresponding values are equal** when the operands’ respective format codes are interpreted using struct syntax.
 
 For the subset of struct format strings currently supported by `tolist()`, v and w are equal if `v.tolist() == w.tolist()`:
@@ -1141,17 +1141,17 @@ For the subset of struct format strings currently supported by `tolist()`, v and
     False
     >>> a == b
     False
-    
-####tobytes()
+
+#### tobytes()
 Return the data in the buffer as a bytestring. This is equivalent to calling the `bytes` constructor on the memoryview
 
-####hex()
+#### hex()
 Return a string object containing two hexadecimal digits for each byte in the buffer.
 
-####tolist()
+#### tolist()
 Return the data in the buffer as a list of elements.
 
-####release()
+#### release()
 Release the underlying buffer exposed by the memoryview object. Many objects take special actions when a view is held on them (for example, a `bytearray` would temporarily forbid resizing); therefore, calling release() is handy to remove these restrictions (and free any dangling resources) as soon as possible.
 
 After this method has been called, any further operation on the view raises a `ValueError` (except `release()` itself which can be called multiple times):
@@ -1174,8 +1174,8 @@ The context management protocol can be used for a similar effect, using the `wit
       File "<stdin>", line 1, in <module>
     ValueError: operation forbidden on released memoryview object
 
-####cast(format[, shape])
-Cast a memoryview to a new format or shape. shape defaults to [`byte_length//new_itemsize`], which means that the result view will be one-dimensional. The return value is a new memoryview, but **the buffer itself is not copied**. 
+#### cast(format[, shape])
+Cast a memoryview to a new format or shape. shape defaults to [`byte_length//new_itemsize`], which means that the result view will be one-dimensional. The return value is a new memoryview, but **the buffer itself is not copied**.
 
     >>> b = bytearray(b'zyz')
     >>> x = memoryview(b)
@@ -1190,7 +1190,7 @@ Cast a memoryview to a new format or shape. shape defaults to [`byte_length//new
 
 
 There are also several readonly attributes available:
-####obj
+#### obj
 The underlying object of the memoryview:
 
     >>> b  = bytearray(b'xyz')
@@ -1198,7 +1198,7 @@ The underlying object of the memoryview:
     >>> m.obj is b
     True
 
-####nbytes
+#### nbytes
 `nbytes == product(shape) * itemsize == len(m.tobytes())`. This is the amount of space in bytes that the array would use in a contiguous representation. It is not necessarily equal to `len(m)`:
 
     >>> import array
@@ -1229,108 +1229,108 @@ Multi-dimensional arrays:
     >>> y.nbytes
     96
 
-####readonly
+#### readonly
 A bool indicating whether the memory is read only.
 
-####format
-A string containing the format (in struct module style) for each element in the view. 
+#### format
+A string containing the format (in struct module style) for each element in the view.
 
-####itemsize
+#### itemsize
 The size in bytes of each element of the memoryview
 
-####ndim
+#### ndim
 An integer indicating how many dimensions of a multi-dimensional array the memory represents.
 
     In [40]: import struct
-    
+
     In [41]: buf = struct.pack('i'*12, *list(range(12)))
-    
+
     In [42]: x = memoryview(buf)
-    
+
     In [43]: y = x.cast('i', shape=[2,2,3])
-    
+
     In [44]: y.tolist()
     Out[44]: [[[0, 1, 2], [3, 4, 5]], [[6, 7, 8], [9, 10, 11]]]
-    
+
     In [45]: y.ndim
     Out[45]: 3
 
 
-####shape
+#### shape
 A tuple of integers the length of `ndim` giving the shape of the memory as an N-dimensional array.
 
     In [46]: y.shape
     Out[46]: (2, 2, 3)
 
-####strides
+#### strides
 A tuple of integers the length of `ndim` giving the size in bytes to access each element for each dimension of the array.
 
     In [47]: y.strides
     Out[47]: (24, 12, 4)
 
-####suboffsets
+#### suboffsets
 Used internally for PIL-style arrays. The value is informational only.
 
-####c_contiguous
+#### c_contiguous
 A bool indicating whether the memory is C-contiguous.
 
-####f_contiguous
+#### f_contiguous
 A bool indicating whether the memory is Fortran contiguous.
 
-####contiguous
+#### contiguous
 A bool indicating whether the memory is contiguous.
 
-##4.9. Set Types — set, frozenset
+## 4.9. Set Types — set, frozenset
 A set object is an **unordered** collection of **distinct** `hashable` objects. Common uses include membership testing, removing duplicates from a sequence, and computing mathematical operations such as intersection, union, difference, and symmetric difference. sets do not support indexing, slicing, or other sequence-like behavior.
 
 There are currently two built-in set types, `set` and `frozenset`. The `set` type is mutable — the contents can be changed using methods like `add()` and `remove()`. Since it is mutable, it has no hash value and cannot be used as either a dictionary key or as an element of another set. The `frozenset` type is immutable and `hashable` — its contents cannot be altered after it is created; it can therefore be used as a dictionary key or as an element of another set.
 
 Non-empty sets (not frozensets) can be created by placing a comma-separated list of elements within braces, for example: `{'jack', 'sjoerd'}`, in addition to the `set` constructor.
 
-####class set([iterable])
-####class frozenset([iterable])
-Return a new set or frozenset object whose elements are taken from iterable. **The elements of a set must be hashable**. To represent sets of sets, the inner sets must be frozenset objects. 
+#### class set([iterable])
+#### class frozenset([iterable])
+Return a new set or frozenset object whose elements are taken from iterable. **The elements of a set must be hashable**. To represent sets of sets, the inner sets must be frozenset objects.
 
 
 instances of `set` and `frozenset` provide the following operations:
 
-####isdisjoint(other)
+#### isdisjoint(other)
 Return `True` if the set has no elements in common with other. Sets are disjoint if and only if their intersection is the empty set.
 
 
 集合的比较操作是集合运算
-####issubset(other)
-####set <= other
+#### issubset(other)
+#### set <= other
 Test whether every element in the set is in other.
 
-####set < other
+#### set < other
 Test whether the set is a proper subset of other, that is, `set <= other and set != other`.
 
 
-####issuperset(other)
-####set >= other
+#### issuperset(other)
+#### set >= other
 Test whether every element in other is in the set.
 
-####set > other
+#### set > other
 Test whether the set is a proper superset of other, that is, `set >= other and set != other`.
 
-####union(*others)
-####set | other | ...
+#### union(*others)
+#### set | other | ...
 Return a new set with elements from the set and all others.
 
-####intersection(*others)
-####set & other & ...
+#### intersection(*others)
+#### set & other & ...
 Return a new set with elements common to the set and all others.
 
-####difference(*others)
-####set - other - ...
+#### difference(*others)
+#### set - other - ...
 Return a new set with elements in the set that are not in the others.
 
-####symmetric_difference(other)
-####set ^ other
+#### symmetric_difference(other)
+#### set ^ other
 Return a new set with elements in either the set or other but not both.
 
-####copy()
+#### copy()
 Return a new set with a shallow copy of s.
 
 Note, the non-operator versions of `union()`, `intersection()`, `difference()`, and `symmetric_difference()`, `issubset()`, and `issuperset()` methods will accept any iterable as an argument. In contrast, their operator based counterparts require their arguments to be sets. This precludes error-prone constructions like `set('abc') & 'cbs'` in favor of the more readable `set('abc').intersection('cbs')`.
@@ -1341,37 +1341,37 @@ Instances of set are compared to instances of frozenset based on their members. 
 Binary operations that mix `set` instances with `frozenset` **return the type of the first operand**. For example: `frozenset('ab') | set('bc')` returns an instance of `frozenset`.
 
 
-####set.update(*others)
+#### set.update(*others)
 ####set |= other | ...
 Update the set, adding elements from all others.
 
-####set.intersection_update(*others)
-####set &= other & ...
+#### set.intersection_update(*others)
+#### set &= other & ...
 Update the set, keeping only elements found in it and all others.
 
-####difference_update(*others)
-####set -= other | ...
+#### difference_update(*others)
+#### set -= other | ...
 Update the set, removing elements found in others.
 
-####symmetric_difference_update(other)
-####set ^= other
+#### symmetric_difference_update(other)
+#### set ^= other
 Update the set, keeping only elements found in either set, but not in both.
 
-####add(elem)
+#### add(elem)
 Add element elem to the set.
 
-####remove(elem)
+#### remove(elem)
 Remove element elem from the set. Raises `KeyError` if elem is not contained in the set.
 
-####discard(elem)
+#### discard(elem)
 Remove element elem from the set if it is present.
 
 作用同 `remove`，只是不会在元素不存在时抛出异常  
 
-####pop()
+#### pop()
 Remove and return an arbitrary element from the set. Raises `KeyError` if the set is empty.
 
-####clear()
+#### clear()
 Remove all elements from the set.
 
 Note, the non-operator versions of the `update()`, `intersection_update()`, `difference_update()`, and `symmetric_difference_update()` methods will accept any iterable as an argument.
@@ -1380,14 +1380,14 @@ Note, the elem argument to the `__contains__()`, `remove()`, and `discard()` met
 
 查找是否有相同的 `frozenset` 期间，传入的参数会发生改变，并重新存储。所以这个期间不能读取或者改变参数的值  
 
-##4.10. Mapping Types — dict
-A mapping object maps hashable values to arbitrary objects. Mappings are mutable objects. There is currently only one standard mapping type, the dictionary. 
+## 4.10. Mapping Types — dict
+A mapping object maps hashable values to arbitrary objects. Mappings are mutable objects. There is currently only one standard mapping type, the dictionary.
 
 Note however, that **since computers store floating-point numbers as approximations it is usually unwise to use them as dictionary keys**.
 
-####class dict(**kwarg)
-####class dict(mapping, **kwarg)
-####class dict(iterable, **kwarg)
+#### class dict(**kwarg)
+#### class dict(mapping, **kwarg)
+#### class dict(iterable, **kwarg)
 If no positional argument is given, an empty dictionary is created. If a positional argument is given and it is a mapping object, a dictionary is created with the same key-value pairs as the mapping object. Otherwise, the positional argument must be an iterable object. **Each item in the iterable must itself be an iterable with exactly two objects**. The first object of each item becomes a key in the new dictionary, and the second object the corresponding value. If a key occurs more than once, the last value for that key becomes the corresponding value in the new dictionary.
 
 `dict()` 也支持 `iterable` 参数
@@ -1400,10 +1400,10 @@ If no positional argument is given, an empty dictionary is created. If a positio
     >>> a == b == c == d == e
     True
 
-####d[key]
+#### d[key]
 Return the item of d with key key. Raises a KeyError if key is not in the map.
 
-If a subclass of dict **defines a method `__missing__()`** and key is not present, the `d[key]` operation calls that method with the key key as argument. 
+If a subclass of dict **defines a method `__missing__()`** and key is not present, the `d[key]` operation calls that method with the key key as argument.
 
     >>> class Counter(dict):
     ...     def __missing__(self, key):
@@ -1416,11 +1416,11 @@ If a subclass of dict **defines a method `__missing__()`** and key is not presen
     1
 
 
-####iter(d)
+#### iter(d)
 Return an iterator over the keys of the dictionary. This is a shortcut for `iter(d.keys())`.
 
 
-####classmethod fromkeys(seq[, value])
+#### classmethod fromkeys(seq[, value])
 Create a new dictionary with keys from seq and values set to value.
 `fromkeys()` is a class method that returns a new dictionary. value defaults to `None`.
 
@@ -1428,68 +1428,68 @@ Create a new dictionary with keys from seq and values set to value.
     Out[26]: {'a': 'lala', 'b': 'lala'}
 
 
-####pop(key[, default])
+#### pop(key[, default])
 If key is in the dictionary, remove it and return its value, else return default. If default is not given and key is not in the dictionary, a `KeyError` is raised.
 
 可以指定默认值  
 
-####popitem()
+#### popitem()
 Remove and return an arbitrary (key, value) pair from the dictionary.
 
-####setdefault(key[, default])
+#### setdefault(key[, default])
 If key is in the dictionary, return its value. If not, insert key with a value of default and return default. default defaults to `None`.
 
     In [29]: d = dict(a=1, b=2)
-    
+
     In [30]: d.setdefault('b', 10)
     Out[30]: 2
-    
+
     In [31]: d
     Out[31]: {'a': 1, 'b': 2}
-    
+
     In [32]: d.setdefault('c', 10)
     Out[32]: 10
-    
+
     In [33]: d
     Out[33]: {'a': 1, 'b': 2, 'c': 10}
 
 
 
-####update([other])
+#### update([other])
 Update the dictionary with the key/value pairs from other, overwriting existing keys. Return `None`.
 
 `update()` accepts either another dictionary object or an iterable of key/value pairs (as tuples or other iterables of length two). If keyword arguments are specified, the dictionary is then updated with those key/value pairs:`d.update(red=1, blue=2)`.
 
     In [34]: d = dict(a=1, b=2)
-    
+
     In [35]: d.update(zip(['c', 'd'], [3, 4]))
-    
+
     In [36]: d
     Out[36]: {'a': 1, 'b': 2, 'c': 3, 'd': 4}
 
 
-###4.10.1. Dictionary view objects
+### 4.10.1. Dictionary view objects
 The objects returned by `dict.keys()`, `dict.values()` and `dict.items()` are view objects. They provide a dynamic view on the dictionary’s entries, which means that **when the dictionary changes, the view reflects these changes**.
 
     In [2]: d = {'a':1}
-    
+
     In [3]: k = d.keys()
-    
+
     In [4]: k.__class__
     Out[4]: dict_keys
-    
+
     In [5]: k
     Out[5]: dict_keys(['a'])
-    
+
     In [6]: d.update(b=2)
-    
+
     In [7]: k
     Out[7]: dict_keys(['a', 'b'])
 
-####iter(dictview)
+#### iter(dictview)
 Return an iterator over the keys, values or items (represented as tuples of `(key, value)`) in the dictionary.
 
-Keys and values are iterated over in an arbitrary order which is non-random, varies across Python implementations, and depends on the dictionary’s history of insertions and deletions. **If keys, values and items views are iterated over with no intervening modifications to the dictionary, the order of items will directly correspond.** This allows the creation of `(value, key)` pairs using zip(): `pairs = zip(d.values(), d.keys())`. 
+Keys and values are iterated over in an arbitrary order which is non-random, varies across Python implementations, and depends on the dictionary’s history of insertions and deletions. **If keys, values and items views are iterated over with no intervening modifications to the dictionary, the order of items will directly correspond.** This allows the creation of `(value, key)` pairs using zip(): `pairs = zip(d.values(), d.keys())`.
 
 Iterating views while adding or deleting entries in the dictionary may raise a `RuntimeError` or fail to iterate over all entries.
 
@@ -1497,26 +1497,26 @@ Iterating views while adding or deleting entries in the dictionary may raise a `
 
 Keys views are set-like since their entries are unique and hashable. If all values are hashable, so that `(key, value)` pairs are unique and hashable, then the items view is also set-like. (Values views are not treated as set-like since the entries are generally not unique.) For set-like views, all of the operations defined for the abstract base class `collections.abc.Set` are available (for example, `==`, `<`, or `^`).
 
-##4.11. Context Manager Types
+## 4.11. Context Manager Types
 [上下文管理器](https://docs.python.org/3.5/library/stdtypes.html#context-manager-types)
 
-##4.12. Other Built-in Types
+## 4.12. Other Built-in Types
 The interpreter supports several other kinds of objects. Most of these support only one or two operations.
 
-###4.12.1. Modules
-The only special operation on a module is attribute access: `m.name`, where m is a module and name accesses a name defined in m‘s symbol table. 
+### 4.12.1. Modules
+The only special operation on a module is attribute access: `m.name`, where m is a module and name accesses a name defined in m‘s symbol table.
 
 A special attribute of every module is `__dict__`. This is the dictionary containing the module’s symbol table. Modifying this dictionary will actually change the module’s symbol table, but direct assignment to the `__dict__` attribute is not possible (you can write `m.__dict__['a'] = 1`, which defines m.a to be 1, but you can’t write `m.__dict__ = {}`). **Modifying `__dict__` directly is not recommended.**
 
-###4.12.2. Classes and Class Instances
+### 4.12.2. Classes and Class Instances
 See [Objects, values and types](https://docs.python.org/3.5/reference/datamodel.html#objects) and [Class definitions](https://docs.python.org/3.5/reference/compound_stmts.html#class) for these.
 
-###4.12.3. Functions
+### 4.12.3. Functions
 **Function objects** are created by function definitions. **The only operation on a function object is to call it: `func(argument-list)`**.
 
 There are really two flavors of function objects: built-in functions and user-defined functions. Both support the same operation (to call the function), but the implementation is different, hence the different object types.
 
-###4.12.4. Methods
+### 4.12.4. Methods
 Methods are functions that are called using the attribute notation. There are two flavors: built-in methods (such as `append()` on lists) and class instance methods. Built-in methods are described with the types that support them.
 
 方法调用时隐式传递` self`
@@ -1527,12 +1527,12 @@ Methods are functions that are called using the attribute notation. There are tw
         ...:     def func(self):
         ...:         return 0
         ...:     
-    
+
     In [11]: a = A()
-    
+
     In [12]: a.func
     Out[12]: <bound method A.func of <__main__.A object at 0x7f2b2028ae48>>
-    
+
     In [13]: a.func.__func__(a.func.__self__)
     Out[13]: 0
 
@@ -1553,37 +1553,37 @@ Like function objects, bound method objects support getting arbitrary attributes
 
 形如 `obj.method` 获取的是一个特殊的 `bound method object` 只能从中获取任意的属性，而不能设置。如果想要为方法设置属性则要获取 `function object`  
 
-###4.12.5. Code Objects
+### 4.12.5. Code Objects
 Code objects are used by the implementation to represent “pseudo-compiled” executable Python code such as a function body. **They differ from function objects because they don’t contain a reference to their global execution environment**. Code objects are returned by the built-in `compile()` function and can be extracted from function objects through their `__code__` attribute. See also the code module.
 
 A code object can be executed or evaluated by passing it (instead of a source string) to the `exec()` or `eval()` built-in functions.
 
-###4.12.6. Type Objects
-Type objects represent the various object types. An object’s type is accessed by the built-in function `type()`. 
+### 4.12.6. Type Objects
+Type objects represent the various object types. An object’s type is accessed by the built-in function `type()`.
 
-###4.12.7. The Null Object
+### 4.12.7. The Null Object
 There is exactly one null object, named `None` (a built-in name). `type(None)()` produces the same singleton.
 
-###4.12.8. The Ellipsis Object
+### 4.12.8. The Ellipsis Object
 This object is commonly used by slicing (see `Slicings`). It supports no special operations. There is exactly one ellipsis object, named `Ellipsis` (a built-in name). `type(Ellipsis)()` produces the `Ellipsis` singleton.
 
 It is written as `Ellipsis` or ```...``.
 
-###4.12.9. The NotImplemented Object
+### 4.12.9. The NotImplemented Object
 This object is returned from comparisons and binary operations when they are asked to operate on types they don’t support. See Comparisons for more information. There is exactly one `NotImplemented` object. `type(NotImplemented)()` produces the singleton instance.
 
 It is written as `NotImplemented`.
 
-###4.12.10. Boolean Values
+### 4.12.10. Boolean Values
 Boolean values are the two constant objects `False` and `True`. The built-in function `bool()` can be used to convert any value to a Boolean, if the value can be interpreted as a truth value (see section Truth Value Testing above).
 
-###4.12.11. Internal Objects
+### 4.12.11. Internal Objects
 See [The standard type hierarchy](https://docs.python.org/3.5/reference/datamodel.html#types) for this information. It describes stack frame objects, traceback objects, and slice objects.
 
-##4.13. Special Attributes
+## 4.13. Special Attributes
 The implementation adds a few special read-only attributes to several object types, where they are relevant. **Some of these are not reported by the `dir()` built-in function**.
 
-####`object.__dict__`
+#### `object.__dict__`
 
 A dictionary or other mapping object used to store an object’s (writable) attributes.
 
@@ -1595,10 +1595,10 @@ class.__bases__
 
     The tuple of base classes of a class object.
 
-####definition.__name__`
+#### definition.__name__`
 The name of the class, function, method, descriptor, or generator instance.
 
-####`definition.__qualname__`
+#### `definition.__qualname__`
 The qualified name of the class, function, method, descriptor, or generator instance.
 
 什么是一个 qualified name
@@ -1619,13 +1619,13 @@ A dotted name showing the “path” from a module’s global scope to a class, 
     >>> C.D.meth.__name__
     'meth'
 
-####`class.__mro__`
+#### `class.__mro__`
 This attribute is a tuple of classes that are considered when looking for base classes during method resolution.
 
-####class.mro()
+#### class.mro()
 This method can be overridden by a metaclass to customize the method resolution order for its instances. It is called at class instantiation, and its result is stored in `__mro__`.
 
-####`class.__subclasses__()`
+#### `class.__subclasses__()`
 Each class keeps a list of weak references to its immediate subclasses. This method returns a list of all those references still alive. Example:
 
     >>> int.__subclasses__()
